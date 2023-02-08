@@ -36,33 +36,11 @@ public class TheatreRoyal implements ActionListener, MouseListener{
 		frame.setResizable(false);
 		ImageIcon icon = new ImageIcon("src/icon.png");
 		frame.setIconImage(icon.getImage());
-
 		titlePanel = new JPanel();
-		titlePanel.setLayout(new GridBagLayout());
-		titlePanel.setBackground(Color.BLACK);
-		titlePanel.setPreferredSize(new Dimension(800, 100));
-
-		titleLabel = new JLabel("Welcome to the Theatre Royal");
-		titleLabel.setForeground(Color.WHITE);
-		titleLabel.setFont(new Font("Arial", Font.BOLD, 50));
-		titlePanel.add(titleLabel);
-
+		titleLabel = new JLabel();
 		bodyPanel = new JPanel();
-		bodyPanel.setLayout(new GridBagLayout());
-		bodyPanel.setBackground(Color.BLACK);
-		bodyPanel.setPreferredSize(new Dimension(800, 700));
-
-		bodyLabel = new JLabel("Click anywhere to continue!");
-		bodyLabel.setForeground(Color.WHITE);
-		bodyLabel.setFont(new Font("Arial", Font.BOLD, 25));
-		bodyPanel.add(bodyLabel);
-
-		frame.add(titlePanel, BorderLayout.NORTH);
-		frame.add(bodyPanel, BorderLayout.SOUTH);
-		frame.setSize(800, 800);
-		frame.setVisible(true);
-		frame.addMouseListener(this);
-
+		bodyLabel = new JLabel();
+		welcomeFrame();
 	}
 
 	public Schedule getSchedule() {
@@ -81,8 +59,31 @@ public class TheatreRoyal implements ActionListener, MouseListener{
 		currentShow = null;
 	}
 
+	// change the frame to the welcome screen
+	public void welcomeFrame() {
+	
+		titleLabel.setText("Welcome to the Theatre Royal");
+		titleLabel.setForeground(Color.WHITE);
+		titleLabel.setFont(new Font("Arial", Font.BOLD, 50));
+		titlePanel.add(titleLabel);
+		
+		bodyPanel.setLayout(new GridBagLayout());
+		bodyPanel.setBackground(Color.BLACK);
+		bodyPanel.setPreferredSize(new Dimension(800, 725));
+		
+		bodyLabel.setText("Click anywhere to continue!");
+		bodyLabel.setForeground(Color.WHITE);
+		bodyLabel.setFont(new Font("Arial", Font.BOLD, 25));
+		bodyPanel.add(bodyLabel);
+		frame.add(titlePanel, BorderLayout.NORTH);
+		frame.add(bodyPanel, BorderLayout.SOUTH);
+		frame.setSize(800, 800);
+		frame.setVisible(true);
+		frame.addMouseListener(this);		
+	}
+	
 	// change the frame to the browse screen
-	public void browse() {
+	public void browseFrame() {
 		// adjust existing frame
 		titleLabel.setText("Browse or Search for a Show");
 		bodyLabel.setText("");
@@ -100,7 +101,7 @@ public class TheatreRoyal implements ActionListener, MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		browse();
+		browseFrame();
 		
 				
 	}
