@@ -1,87 +1,98 @@
 
-
-import java.io.FileWriter; // Import the FileWriter class
-import java.io.IOException; // Import the IOException class to handle errors
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 public class Booking {
 
 	private ArrayList<Ticket> basket;
 	private InputReader reader;
 	private Schedule schedule;
-	private int orderNo;
 	private double postageFee;
+	
 
 	public Booking(Schedule schedule) {
 		basket = new ArrayList<>();
 		this.schedule = schedule;
 		reader = new InputReader();
-		orderNo = 0;
 	}
 
-	public void startBookingProcess() {
-		System.out.println("\n\n\nWelcome to the Theatre Royal");
-		System.out.println("Here's a list of all our current shows:");
-		browse();
-		printOptionMenu();
+//	public void printOptionMenu() {
+//		// option screen
+//
+//		int choice = 0;
+//		System.out.println("\n\nWould you like to: ");
+//		System.out.println("1:	Browse through performances");
+//		// log in?
+//		// register?
+//		System.out.println("2:	Search for a specific show");
+//		System.out.println("3:	Buy a ticket");
+//		System.out.println("4:	Display basket");
+//		System.out.println("5:	Remove a ticket from basket");
+//		System.out.println("6:	Go to checkout and complete purchase");
+//		while (choice < 1 || choice > 6) {
+//			choice = reader.getNumber("\nEnter the number of the function you wish to perform");
+//		}
+//		if (choice == 1) {
+//			browse();
+//			printOptionMenu();
+//		} else if (choice == 2) {
+//			search();
+//			printOptionMenu();
+//		} else if (choice == 3) {
+//			placeOrder();
+//			printOptionMenu();
+//		} else if (choice == 4) {
+//			displayBasket();
+//			printOptionMenu();
+//		} else if (choice == 5) {
+//			displayBasket();
+//			int ticketToDelete = -9999;
+//// FIXME add exception
+//			while (ticketToDelete > basket.size() || ticketToDelete < 0) {
+//				ticketToDelete = reader.getNumber("Enter ticket number:");
+//			}
+//			Ticket ticket = basket.get(ticketToDelete + 1);
+//			removeTicket(ticket);
+//			System.out.println("Ticket removed from basket");
+//			System.out.println("New basket total: " + getBasketTotal());
+//			printOptionMenu();
+//		} else if (choice == 6) {
+//			if (basket.size() > 0) {
+//				checkout();
+//				// next customer
+//				startBookingProcess();
+//			} else {
+//				System.out.println("\n\nYour basket is empty!");
+//				printOptionMenu();
+//			}
+//		}
+//
+//	}
 
-	}
-
-	public void printOptionMenu() {
-		int choice = 0;
-		System.out.println("\n\nWould you like to: ");
-		System.out.println("1:	Browse through performances");
-		System.out.println("2:	Search for a specific show");
-		System.out.println("3:	Buy a ticket");
-		System.out.println("4:	Display basket");
-		System.out.println("5:	Remove a ticket from basket");
-		System.out.println("6:	Go to checkout and complete purchase");
-		while (choice < 1 || choice > 6) {
-			choice = reader.getNumber("\nEnter the number of the function you wish to perform");
-		}
-		if (choice == 1) {
-			browse();
-			printOptionMenu();
-		} else if (choice == 2) {
-			search();
-			printOptionMenu();
-		} else if (choice == 3) {
-			placeOrder();
-			printOptionMenu();
-		} else if (choice == 4) {
-			displayBasket();
-			printOptionMenu();
-		} else if (choice == 5) {
-			displayBasket();
-			int ticketToDelete = -9999;
-			while (ticketToDelete > basket.size() || ticketToDelete < 0) {
-				ticketToDelete = reader.getNumber("Enter ticket number:");
-			}
-			Ticket ticket = basket.get(ticketToDelete + 1);
-			removeTicket(ticket);
-			System.out.println("Ticket removed from basket");
-			System.out.println("New basket total: " + getBasketTotal());
-			printOptionMenu();
-		} else if (choice == 6) {
-			if (basket.size() > 0) {
-				checkout();
-				// next customer
-				startBookingProcess();
-			} else {
-				System.out.println("\n\nYour basket is empty!");
-				printOptionMenu();
-			}
-		}
-
-	}
-
-	public void browse() {
-		schedule.printSchedule();
-	}
-
-	public void search() {
-		// query the database
-	}
+//	public void browse() {
+//		schedule.printSchedule();
+//	}
+//
+//	public void search() {
+//		// query the database
+//	}
 
 	public void placeOrder() {
 		String date = reader.getText("Enter the performance date in the format YYMMDD");
@@ -184,7 +195,7 @@ public class Booking {
 			cardNo = reader.getText("Please enter your 16 digit card number");
 		}
 		cardNo = Encryption.encrypt("card", cardNo);
-		
+
 		System.out.println("Your basket total is " + getBasketTotal());
 		String collect = reader.getText(
 				"Would you like to collect your tickets or have them posted (Type 'C' to collect or 'P' to deliver)");
@@ -210,12 +221,12 @@ public class Booking {
 				postageFee = basket.size();
 			}
 		}
-		
+
 		// ask to confirm purchase
 		System.out.println("Your basket total is " + getBasketTotal());
 		String confirm = reader.getText("Are you happy to confirm your order? ('y' for yes or 'n' for no)");
 		// if happy to complete purchase
-		if (confirm.equals("y") ||  confirm.equals("Y")) {
+		if (confirm.equals("y") || confirm.equals("Y")) {
 			// complete - generate order file and clear basket.
 			System.out.println("\nOrder confirmed");
 			orderNo++;
@@ -225,7 +236,7 @@ public class Booking {
 				myWriter.write("Order0000" + orderNo);
 				myWriter.write("\n Name: " + name);
 				myWriter.write("\n Address: " + address);
-				myWriter.write("\nCard Number: "+cardNo);
+				myWriter.write("\nCard Number: " + cardNo);
 				int counter = 1;
 				for (Ticket ticket : basket) {
 					myWriter.write("\nTicket " + counter + ":");
@@ -247,7 +258,7 @@ public class Booking {
 				e.printStackTrace();
 			}
 			basket.clear();
-			postageFee=0;
+			postageFee = 0;
 		} else {
 			// else not happy to complete purchase take back to main menu
 			printOptionMenu();
@@ -260,10 +271,8 @@ public class Booking {
 		for (Ticket ticket : basket) {
 			total += ticket.getPrice();
 		}
-		total= total + postageFee;
+		total = total + postageFee;
 		return total;
 	}
-	
-	
-	
+
 }

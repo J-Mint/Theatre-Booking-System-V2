@@ -16,13 +16,12 @@ public class Main {
 		Performance perf3 = new Performance(show3, 30);
 		Performance perf4 = new Performance(show4, 40);
 		
-		theatre.getManager().getSchedule().addToSchedule("221208", "E", perf1);
-		theatre.getManager().getSchedule().addToSchedule("221208", "M", perf2);
-		theatre.getManager().getSchedule().addToSchedule("221209", "E", perf3);
-		theatre.getManager().getSchedule().addToSchedule("221209", "M", perf4);
+		theatre.getSchedule().addToSchedule("221208", "E", perf1);
+		theatre.getSchedule().addToSchedule("221208", "M", perf2);
+		theatre.getSchedule().addToSchedule("221209", "E", perf3);
+		theatre.getSchedule().addToSchedule("221209", "M", perf4);
 		
-		theatre.getManager().setCurrentShow("221208", "E");
-		theatre.start();
+		theatre.setCurrentShow("221208", "E");
 		
 		
 	}
