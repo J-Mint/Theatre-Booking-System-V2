@@ -17,24 +17,14 @@ public class DBConnector {
 
 	public void connect() {
 		try {
-			Scanner s = new Scanner(new File("Credentials.txt"));
-			String uname = s.nextLine();
-			String pwd = s.nextLine();
+			//Scanner s = new Scanner(new File("Credentials.txt"));
+			String uname = "root";
+			String pwd = "joee";
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/theatre", uname, pwd);
-		} catch (IOException e) {
-			System.out.println("File error.");
-			e.printStackTrace();
-			return;
-		} catch (SQLException e) {
+			} catch (SQLException e) {
 			System.out.println("Connection failed.");
 			e.printStackTrace();
 			return;
-		}
-
-		if (conn != null) {
-			System.out.println("Connection established.");
-		} else {
-			System.out.println("Connection null still.");
 		}
 	}
 
@@ -47,16 +37,10 @@ public class DBConnector {
 			pst.execute();
 			ResultSet results = pst.getResultSet();
 			if (results != null) {
-				int rowcount = 0;
 				if (results.last()) {
-					rowcount = results.getRow();
-					results.beforeFirst(); // not rs.first() because the rs.next() below will move on, missing the
-											// first
+					results.beforeFirst(); // not rs.first() because the rs.next() below will move on, missing the first
 											// element
 				}
-				System.out.println(sql + "\n Success.  Result set has " + rowcount + " rows");
-			} else {
-				System.out.println(sql + "\n Success.  No results returned");
 			}
 			return results;
 		} catch (SQLException e) {
@@ -65,27 +49,6 @@ public class DBConnector {
 			return null;
 		}
 
-	}
-
-	// 6. Process Results
-
-	// TODO: ONLY WORKS FOR THE SHOW Table
-
-	public void printResultStart(ResultSet rs) {
-		try {
-			// while there is another row
-			while (rs.next()) {
-				// s.show_type, s.show_duration, s.show_description, s.show_language
-				System.out.print("Performance ID " + rs.getInt("performance_id") + " ");
-				System.out.print("Show Name " + rs.getString("show_name") + " ");
-				System.out.print("Performance Date " + rs.getDate("performance_date") + " ");
-				System.out.println("Performance Time " + rs.getTime("start_time"));
-//				System.out.print("Performance ID " + rs.getInt("performance_id") + " ");
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public void close() {
