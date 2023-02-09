@@ -29,18 +29,7 @@ public class TheatreRoyal implements ActionListener, MouseListener{
 	}
 
 	public void start() {
-		// Welcome Screen
-		frame = new JFrame();
-		frame.setTitle("Theatre Booking System V3");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-		ImageIcon icon = new ImageIcon("src/icon.png");
-		frame.setIconImage(icon.getImage());
-		titlePanel = new JPanel();
-		titleLabel = new JLabel();
-		bodyPanel = new JPanel();
-		bodyLabel = new JLabel();
-		welcomeFrame();
+		
 	}
 
 	public Schedule getSchedule() {
@@ -59,27 +48,6 @@ public class TheatreRoyal implements ActionListener, MouseListener{
 		currentShow = null;
 	}
 
-	// change the frame to the welcome screen
-	public void welcomeFrame() {
-	
-		titleLabel.setText("Welcome to the Theatre Royal");
-		titleLabel.setForeground(Color.WHITE);
-		titleLabel.setFont(new Font("Arial", Font.BOLD, 50));
-		titlePanel.add(titleLabel);
-		
-		bodyPanel.setLayout(new GridBagLayout());
-		bodyPanel.setBackground(Color.BLACK);
-		bodyPanel.setPreferredSize(new Dimension(800, 725));
-		
-		bodyLabel.setText("Click anywhere to continue!");
-		bodyLabel.setForeground(Color.WHITE);
-		bodyLabel.setFont(new Font("Arial", Font.BOLD, 25));
-		bodyPanel.add(bodyLabel);
-		frame.add(titlePanel, BorderLayout.NORTH);
-		frame.add(bodyPanel, BorderLayout.SOUTH);
-		frame.setSize(800, 800);
-		frame.setVisible(true);
-		frame.addMouseListener(this);		
-	}
+
 	
 }
