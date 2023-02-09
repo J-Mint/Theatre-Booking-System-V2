@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -40,6 +41,10 @@ public class WelcomeFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public WelcomeFrame() {
+		ImageIcon icon = new ImageIcon("src/icon.png");
+		setIconImage(icon.getImage());
+		setTitle("Theatre Booking System V3");
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(000, 000, 800, 800);
 		contentPane = new JPanel();
@@ -54,7 +59,9 @@ public class WelcomeFrame extends JFrame {
 		welcomeLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("update");
+				dispose();
+				BrowseFrame bframe = new BrowseFrame();
+				bframe.setVisible(true);
 			}
 		});
 		welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -73,7 +80,9 @@ public class WelcomeFrame extends JFrame {
 		contLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("update");
+				dispose();
+				BrowseFrame bframe = new BrowseFrame();
+				bframe.setVisible(true);
 			}
 		});
 		contLabel.setHorizontalAlignment(SwingConstants.CENTER);
