@@ -170,8 +170,10 @@ public class BrowseFrame extends JFrame {
 		btnNewButton.addActionListener((ActionEvent e) -> {
 			try {
 				int index = table.getSelectedRow();
-				Object performanceID = model.getValueAt(index, 0);
-				System.out.println(performanceID + " UPDATE ME");
+				int performanceID = Integer.parseInt((String) model.getValueAt(index, 0));
+				dispose();
+				ShowDetailedFrame dframe = new ShowDetailedFrame(performanceID);
+				dframe.setVisible(true);
 				
 				
 			} catch (ArrayIndexOutOfBoundsException e1) {
