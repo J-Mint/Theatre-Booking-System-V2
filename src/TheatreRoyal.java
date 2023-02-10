@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 public class TheatreRoyal {
 
 	private Schedule schedule;
-	private Booking booking;
 	private Performance currentShow;
 	private JFrame frame;
 	private JPanel titlePanel, bodyPanel;
@@ -24,7 +23,6 @@ public class TheatreRoyal {
 
 	public TheatreRoyal() {
 		schedule = new Schedule();
-		booking = new Booking(schedule);
 		start();
 	}
 
