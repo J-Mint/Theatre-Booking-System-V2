@@ -123,14 +123,16 @@ public class BookingFrame extends JFrame {
 									ticketCount++;
 									lblCount.setText("" + ticketCount);
 									if (choice == 0) {
-										String[] order = { performanceID, "std", seatID };
+										double price = Double.parseDouble(stallPrice);
+										String[] order = { performanceID, "std", seatID, ""+price};
 										tempBasket.add(order);
-										total += Double.parseDouble(stallPrice);
+										total += price;
 										lblTotal1.setText("" + total);
 									} else {
-										String[] order = { performanceID, "con", seatID };
+										double price = ((Double.parseDouble(stallPrice)) * 3.0 / 4.0);
+										String[] order = { performanceID, "con", seatID, ""+price };
 										tempBasket.add(order);
-										total += ((Double.parseDouble(stallPrice)) * 3.0 / 4.0);
+										total += price;
 										lblTotal1.setText("" + total);
 									}
 								} else {
@@ -185,15 +187,15 @@ public class BookingFrame extends JFrame {
 									ticketCount++;
 									lblCount.setText("" + ticketCount);
 									if (choice == 0) {
-										String[] order = { performanceID, "std", seatID };
+										Double price = Double.parseDouble(circlePrice);;
+										String[] order = { performanceID, "std", seatID, ""+price  };
 										tempBasket.add(order);
-										total += Double.parseDouble(circlePrice);
-										lblTotal1.setText("" + total);
+										lblTotal1.setText("" + price);
 									} else {
-										String[] order = { performanceID, "con", seatID };
+										Double price = ((Double.parseDouble(circlePrice)) * 3.0 / 4.0);
+										String[] order = { performanceID, "con", seatID, ""+price};
 										tempBasket.add(order);
-										total += ((Double.parseDouble(circlePrice)) * 3.0 / 4.0);
-										lblTotal1.setText("" + total);
+										lblTotal1.setText("" + price);
 
 									}
 								}
@@ -240,7 +242,7 @@ public class BookingFrame extends JFrame {
 				DBConnector DBC = new DBConnector();
 				DBC.connect();
 				for (String[] i : tempBasket) {
-					String query = "INSERT INTO basket (performance_id, standard_or_concession, seat_id) VALUES ("+i[0]+", '"+i[1]+"', "+i[2]+")";
+					String query = "INSERT INTO basket (performance_id, standard_or_concession, seat_id, price) VALUES ("+i[0]+", '"+i[1]+"', "+i[2]+","+i[3]+")";
 					DBC.runQuery(query);
 					query = "UPDATE seats SET seat_booked=true WHERE performance_id="+i[0]+" AND seat_id="+i[2];
 					DBC.runQuery(query);

@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class TheatreRoyal implements ActionListener, MouseListener{
+public class TheatreRoyal {
 
 	private Schedule schedule;
 	private Booking booking;
