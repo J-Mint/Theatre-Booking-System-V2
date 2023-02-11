@@ -36,7 +36,7 @@ public class BasketFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BasketFrame frame = new BasketFrame();
+					BasketFrame frame = new BasketFrame(0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,8 +47,9 @@ public class BasketFrame extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param userID 
 	 */
-	public BasketFrame() {
+	public BasketFrame(int userID) {
 		ImageIcon icon = new ImageIcon("src/icon.png");
 		setIconImage(icon.getImage());
 		setTitle("Theatre Booking System V3");
@@ -90,7 +91,7 @@ public class BasketFrame extends JFrame {
 		btnNewButton.setBounds(10, 623, 166, 50);
 		btnNewButton.addActionListener((ActionEvent e) -> {
 			dispose();
-			BrowseFrame bframe = new BrowseFrame();
+			BrowseFrame bframe = new BrowseFrame(userID);
 			bframe.setVisible(true);
 		});	
 		panel_1.add(btnNewButton);
@@ -100,7 +101,7 @@ public class BasketFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				dispose();
-				CheckoutFrame cframe = new CheckoutFrame(price, concessionCount, ticketCount, soonestDate);
+				CheckoutFrame cframe = new CheckoutFrame(price, concessionCount, ticketCount, soonestDate, userID);
 				cframe.setVisible(true);
 			}
 		});

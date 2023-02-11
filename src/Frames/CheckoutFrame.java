@@ -34,7 +34,7 @@ public class CheckoutFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CheckoutFrame frame = new CheckoutFrame("100", "10", "10", "2023-06-01");
+					CheckoutFrame frame = new CheckoutFrame("100", "10", "10", "2023-06-01", 0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,7 +48,7 @@ public class CheckoutFrame extends JFrame {
 	 * @param price 
 	 * @param soonestDate 
 	 */
-	public CheckoutFrame(String price, String concessionCount, String ticketCount, String soonestDate) {
+	public CheckoutFrame(String price, String concessionCount, String ticketCount, String soonestDate, int userID) {
 		ImageIcon icon = new ImageIcon("src/icon.png");
 		setIconImage(icon.getImage());
 		setTitle("Theatre Booking System V3");
@@ -153,6 +153,7 @@ public class CheckoutFrame extends JFrame {
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				// what will we do with the textfields?
 				// add order to order to order table
 				// clear the basket
 				// back to welcome screen

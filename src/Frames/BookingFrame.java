@@ -34,7 +34,7 @@ public class BookingFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BookingFrame frame = new BookingFrame("5", "10");
+					BookingFrame frame = new BookingFrame("5", "10", null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,7 +46,7 @@ public class BookingFrame extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public BookingFrame(String circlePrice, String stallPrice) {
+	public BookingFrame(String circlePrice, String stallPrice, int userID) {
 		tempBasket = new ArrayList<>();
 		ticketCount = 0;
 		total = 0.0;
@@ -252,7 +252,7 @@ public class BookingFrame extends JFrame {
 				btnNewButton_1.setEnabled(false);
 				dispose();
 				//go to basket page
-				BasketFrame dframe = new BasketFrame();
+				BasketFrame dframe = new BasketFrame(userID);
 				dframe.setVisible(true);
 				//add basket page to browse frame
 			}

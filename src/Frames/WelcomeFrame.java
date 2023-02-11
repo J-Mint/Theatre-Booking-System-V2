@@ -61,7 +61,7 @@ public class WelcomeFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				dispose();
-				BrowseFrame bframe = new BrowseFrame();
+				BrowseFrame bframe = new BrowseFrame(0);
 				bframe.setVisible(true);
 			}
 		});
@@ -82,7 +82,7 @@ public class WelcomeFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				dispose();
-				BrowseFrame bframe = new BrowseFrame();
+				BrowseFrame bframe = new BrowseFrame(0);
 				bframe.setVisible(true);
 			}
 		});

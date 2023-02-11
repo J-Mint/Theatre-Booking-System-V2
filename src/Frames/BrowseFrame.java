@@ -53,7 +53,7 @@ public class BrowseFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BrowseFrame frame = new BrowseFrame();
+					BrowseFrame frame = new BrowseFrame(0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -65,7 +65,7 @@ public class BrowseFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public BrowseFrame() {
+	public BrowseFrame(int userID) {
 		ImageIcon icon = new ImageIcon("src/icon.png");
 		setIconImage(icon.getImage());
 		setTitle("Theatre Booking System V3");
@@ -81,6 +81,16 @@ public class BrowseFrame extends JFrame {
 		contentPane.add(panel);
 
 		JLabel headerLabel = new JLabel();
+		headerLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (userID == 0 ) {
+				dispose();
+				LoginFrame lframe = new LoginFrame();
+				lframe.setVisible(true);
+				}
+			}
+		});
 		headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		headerLabel.setBounds(0, 0, 777, 75);
 		headerLabel.setBackground(SystemColor.menu);
@@ -174,7 +184,7 @@ public class BrowseFrame extends JFrame {
 				int index = table.getSelectedRow();
 				int performanceID = Integer.parseInt((String) model.getValueAt(index, 0));
 				dispose();
-				ShowDetailedFrame dframe = new ShowDetailedFrame(performanceID);
+				ShowDetailedFrame dframe = new ShowDetailedFrame(performanceID, userID);
 				dframe.setVisible(true);
 				
 				

@@ -38,7 +38,7 @@ public class ShowDetailedFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ShowDetailedFrame(int performanceID) {
+	public ShowDetailedFrame(int performanceID, int userID) {
 		ImageIcon icon = new ImageIcon("src/icon.png");
 		setIconImage(icon.getImage());
 		setTitle("Theatre Booking System V3");
@@ -192,7 +192,7 @@ public class ShowDetailedFrame extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				BrowseFrame bframe = new BrowseFrame();
+				BrowseFrame bframe = new BrowseFrame(userID);
 				bframe.setVisible(true);
 			}
 		});
@@ -209,8 +209,13 @@ public class ShowDetailedFrame extends JFrame {
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				BookingFrame boframe = new BookingFrame(lblCirclePrice1.getText(), lblStallPrice1.getText());
+				if (userID == 0) {
+					LoginFrame lframe = new LoginFrame();
+					lframe.setVisible(true);
+				} else {
+				BookingFrame boframe = new BookingFrame(lblCirclePrice1.getText(), lblStallPrice1.getText(), userID);
 				boframe.setVisible(true);
+				}
 			}
 		});
 		panel_1.add(btnContinue);
