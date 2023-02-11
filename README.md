@@ -2,16 +2,25 @@
 A program to browse, search and book theatre tickets.
 Uses Java (inc Swing and JDBC) and MySQL 
 
-Current progress:
+# This project is a work in progress. If you are interested in learning more about it, please get in contact with me and I can show you a demo of how it works and run through all the current and planned features.
 
-https://user-images.githubusercontent.com/112823669/217821576-01e8e972-a062-4dba-a89b-b4c675a4b541.mp4
+An out of date video demo from 09/02/2023 (much progress has been made since then)
+
+
+https://user-images.githubusercontent.com/112823669/218261108-b97a4934-b796-4759-9951-de5fd0377b64.mp4
+
+
 
 ## To do:
-* Checkout screen
-* Login screen
-* Registration screen
-* Admin screen
+* Admin menu options screen
 * SQL Triggers and stored functions
 * Testing
-* tidy-up, rename variables, add comments
-* Format (DOUBLE) price so that it is to 2 decimal places
+* Exception handling
+* tidy-up constructors (improve readbility), rename variables, add comments, make member variables private
+* Format (DOUBLE) price so that it is to 2 decimal 
+* Update SQL queries
+* change the basket database to have user id, rather than a collection of multiple baskets
+* Checkout compeltion method
+* update display frame
+* upload the Project spec
+* upload ERD and UML diagram
