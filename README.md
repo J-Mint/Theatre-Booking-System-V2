@@ -24,6 +24,7 @@ https://user-images.githubusercontent.com/112823669/218261108-b97a4934-b796-4759
 * update display frame
 * upload the Project spec
 * upload ERD and UML diagram
+* Improve this readme file
 
 
 ## Flow
