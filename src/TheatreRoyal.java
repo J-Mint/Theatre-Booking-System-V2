@@ -34,10 +34,6 @@ public class TheatreRoyal {
 		return schedule;
 	}
 
-	public Booking getBooking() {
-		return booking;
-	}
-
 	public void setCurrentShow(String dateYYMMDD, String stageTimeEorM) {
 		this.currentShow = schedule.getPerformance(dateYYMMDD + stageTimeEorM);
 	}
