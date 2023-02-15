@@ -83,6 +83,4 @@ https://user-images.githubusercontent.com/112823669/218261108-b97a4934-b796-4759
 ![image](https://user-images.githubusercontent.com/112823669/218530224-3a7a51e3-0814-4b84-9236-e17a530688b0.png)
 
 
-![image](https://user-images.githubusercontent.com/112823669/218529925-a7bcf0f9-2b71-46b5-a1ec-c025aa84f16b.png)
-
 
