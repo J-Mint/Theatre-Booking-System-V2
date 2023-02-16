@@ -21,7 +21,7 @@ import javax.swing.UIManager;
 
 public class WelcomeFrame extends JFrame {
 
-	private JPanel contentPane;
+	private JPanel mainPanel;
 
 	/**
 	 * Launch the application.
@@ -43,24 +43,39 @@ public class WelcomeFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public WelcomeFrame() {
-		try { 
-		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
-		ImageIcon icon = new ImageIcon("src/icon.png");
-		setIconImage(icon.getImage());
-		setTitle("Theatre Booking System V3");
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(000, 000, 800, 800);
-		contentPane = new JPanel();
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 800, 75);
-		contentPane.add(panel);
+		loadUIStyle();
+		loadImageIcon();
+		loadFrameAndMainPanel();
+		loadWelcomePanel();
+		loadBodyPanel();		
+	}
+
+	private void loadBodyPanel() {
+		JPanel bodyPanel = new JPanel();
+		bodyPanel.setBounds(0, 77, 784, 684);
+		JLabel clickToBeginLabel = new JLabel();
+		clickToBeginLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				BrowseFrame bframe = new BrowseFrame(0);
+				bframe.setVisible(true);
+			}
+		});
+		clickToBeginLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		clickToBeginLabel.setBackground(SystemColor.menu);
+		clickToBeginLabel.setFont(new Font("Arial", Font.BOLD, 35));
+		clickToBeginLabel.setText("Click to begin");
+		clickToBeginLabel.setBounds(0, 0, 784, 684);
+		bodyPanel.add(clickToBeginLabel);
+		mainPanel.add(bodyPanel);
+		bodyPanel.setLayout(null);
+	}
+
+	private void loadWelcomePanel() {
+		JPanel headerPanel = new JPanel();
+		headerPanel.setBounds(0, 0, 800, 75);
+		mainPanel.add(headerPanel);
 		
 		JLabel welcomeLabel = new JLabel();
 		welcomeLabel.addMouseListener(new MouseAdapter() {
@@ -76,33 +91,33 @@ public class WelcomeFrame extends JFrame {
 		welcomeLabel.setBackground(SystemColor.menu);
 		welcomeLabel.setFont(new Font("Arial", Font.BOLD, 46));
 		welcomeLabel.setText("Welcome to the Theatre Royal");
-		panel.setLayout(null);
-		panel.add(welcomeLabel);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 77, 784, 684);
-		
-		
-		JLabel contLabel = new JLabel();
-		contLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				dispose();
-				BrowseFrame bframe = new BrowseFrame(0);
-				bframe.setVisible(true);
-			}
-		});
-		contLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		contLabel.setBackground(SystemColor.menu);
-		contLabel.setFont(new Font("Arial", Font.BOLD, 35));
-		contLabel.setText("Click to begin");
-		contLabel.setBounds(0, 0, 784, 684);
-		panel_1.add(contLabel);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
-		
+		headerPanel.setLayout(null);
+		headerPanel.add(welcomeLabel);
 	}
 
+	public void loadUIStyle() {
+		try { 
+		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+	}
+	
+	public void loadImageIcon() {
+		ImageIcon icon = new ImageIcon("src/icon.png");
+		setIconImage(icon.getImage());
+		setTitle("Theatre Booking System V3");
+	}
+	
+	public void loadFrameAndMainPanel() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(000, 000, 800, 800);
+		mainPanel = new JPanel();
+		setContentPane(mainPanel);
+		mainPanel.setLayout(null);
+	}
+
+	
 	
 
 }

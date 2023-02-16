@@ -76,24 +76,66 @@ public class AdminMenuFrame extends JFrame {
 		stagePerformanceButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				dispose();
+				StagePerformanceFrame sframe = new StagePerformanceFrame();
+				sframe.setVisible(true);	
 			}
 		});
 		panel_2.add(stagePerformanceButton);
 		
 		JButton addShowButton = new JButton("Add Show");
+		addShowButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				AddShowFrame aframe = new AddShowFrame();
+				aframe.setVisible(true);
+			}
+		});
 		panel_2.add(addShowButton);
 		
 		JButton removeShowButton = new JButton("Remove Show");
+		removeShowButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				RemoveShowFrame rframe = new RemoveShowFrame();
+				rframe.setVisible(true);
+			}
+		});
 		panel_2.add(removeShowButton);
 		
 		JButton removePerformanceButton = new JButton("Remove Performance");
+		removePerformanceButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				RemovePerformanceFrame rpframe = new RemovePerformanceFrame();
+				rpframe.setVisible(true);
+			}
+		});
 		panel_2.add(removePerformanceButton);
 		
 		JButton logoutButton = new JButton("Logout");
+		logoutButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				WelcomeFrame wframe = new WelcomeFrame();
+				wframe.setVisible(true);
+			}
+		});
 		panel_2.add(logoutButton);
 		
 		JButton browseButton = new JButton("Browse shows");
+		browseButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				BrowseFrame bframe = new BrowseFrame(1);
+				bframe.setVisible(true);
+			}
+		});
 		panel_2.add(browseButton);
 		
 		JPanel panel_1 = new JPanel();

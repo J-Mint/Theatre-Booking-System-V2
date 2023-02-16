@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 
 import javax.swing.ButtonGroup;
@@ -14,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -31,6 +33,7 @@ public class CheckoutFrame extends JFrame {
 	private JTextField addressTextfield;
 	private JTextField cardNoTextfield;
 	private Boolean collectionRequired;
+
 	/**
 	 * Launch the application.
 	 */
@@ -158,44 +161,67 @@ public class CheckoutFrame extends JFrame {
 		completePurchaseButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// display a joptionpane message dialog Successful. Thank you for your order. log out button.
-				
+				// display a joptionpane message dialog Successful. Thank you for your order.
+				JFrame dialogFrame = new JFrame("JOptionPane showMessageDialog example");
+				JOptionPane.showMessageDialog(dialogFrame, "Purchase successful. Purchase Order File Downloaded.");
+				dispose();
 				DBConnector DBC = new DBConnector();
 				DBC.connect();
 				LocalDate date = LocalDate.now();
-				String query = "CALL orderCompleteInsertion("+userID+", "+forenameTextfield.getText()+", "+surnameTextfield.getText()+", "+addressTextfield.getText()+", '"+date+"' , "+collectionRequired+")";
+				String query = "CALL orderCompleteInsertion(" + userID + ", '" + forenameTextfield.getText() + "', '"
+						+ surnameTextfield.getText() + "', '" + addressTextfield.getText() + "', '" + date + "' , "
+						+ collectionRequired + ")";
+				String orderID = "";
+				try {
 				DBC.runQuery(query);
-				dispose();
+				query = "SELECT order_id FROM orders WHERE customer_id="+userID+" AND order_date='"+date+"'";
+				ResultSet rs = DBC.runQuery(query);
+				while (rs.next()) {
+					orderID = rs.getString(1);
+				}
+				} catch (Exception e1) {
+					
+				}
 				WelcomeFrame frame = new WelcomeFrame();
 				frame.setVisible(true);
-				//generte po file
+				// generte po file
+				
+				while (orderID.length() < 7) {
+					orderID=String.format("%7s", orderID).replace(" " , "0");
+				}
+				
 				try {
-					FileWriter myWriter = new FileWriter("C:\\Users\\Joe\\Downloads\\PO" + "CHANGEORDERNAME" + ".txt");
+					FileWriter myWriter = new FileWriter("C:\\Users\\Joe\\Downloads\\PO" + orderID + ".txt");
 					myWriter.write("---------------------------------------------------\n");
 					myWriter.write("THANK YOU FOR YOUR PURCHASE.\n");
 					myWriter.write("---------------------------------------------------\n");
-					myWriter.write("NAME: "+forenameTextfield.getText().toUpperCase()+" "+surnameTextfield.getText().toUpperCase()+"\n");
+					myWriter.write("NAME: " + forenameTextfield.getText().toUpperCase() + " "
+							+ surnameTextfield.getText().toUpperCase() + "\n");
 					myWriter.write("---------------------------------------------------\n");
-					myWriter.write("ADDRESS: "+addressTextfield.getText().toUpperCase()+"\n");
-					myWriter.write("CARD NO: \n");
+					myWriter.write("ADDRESS: " + addressTextfield.getText().toUpperCase() + "\n");
+					myWriter.write("CARD NO: **** **** **** "+(cardNoTextfield.getText().substring(cardNoTextfield.getText().length() - 4))+"\n");
+					myWriter.write("ORDER TOTAL: £"+price+"\n");
 					myWriter.write("---------------------------------------------------\n");
-					myWriter.write("ORDER_ID: \n");
-					myWriter.write("CUSTOMER_ID: \n");
+					myWriter.write("ORDER_ID: "+orderID +"\n");
+					myWriter.write("CUSTOMER_ID: "+userID+"\n");
 					myWriter.write("---------------------------------------------------\n");
+					
+					
+					
 					// for loop number of tickets in basket
 					for (int i = 1; i <= Integer.parseInt(ticketCount); i++) {
-						myWriter.write("TICKET "+ i+"\n");
-						myWriter.write("PERFORMANCE_ID:\n");
-						myWriter.write("SEAT_ID:\n");
-						myWriter.write("SEAT_TYPE:\n");
-						myWriter.write("STANDARD_TICKET:\n");
-						myWriter.write("PRICE:\n");
-						myWriter.write("SHOW_TITLE:\n");
-						myWriter.write("DATE:\n");
-						myWriter.write("TIME:\n");
+						myWriter.write("TICKET " + i + "\n");
+						myWriter.write("PERFORMANCE_ID: \n");
+						myWriter.write("SEAT_ID: \n");
+						myWriter.write("SEAT_TYPE: \n");
+						myWriter.write("STANDARD_TICKET: \n");
+						myWriter.write("PRICE: \n");
+						myWriter.write("SHOW_TITLE: \n");
+						myWriter.write("DATE: \n");
+						myWriter.write("TIME: \n");
 						myWriter.write("---------------------------------------------------\n");
 					}
-					
+
 					myWriter.close();
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -211,8 +237,8 @@ public class CheckoutFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				checkoutLabel_1_1.setText("" + Double.parseDouble(price));
-				collectionRequired =true;
-				
+				collectionRequired = true;
+
 			}
 		});
 		rdbtnNewRadioButton.setFont(new Font("Arial", Font.PLAIN, 16));
