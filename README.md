@@ -18,20 +18,15 @@ An out of date video demo from 09/02/2023 (much progress has been made since the
 https://user-images.githubusercontent.com/112823669/218261108-b97a4934-b796-4759-9951-de5fd0377b64.mp4
 
 ## To do:
-* Admin menu options screen
 * SQL Triggers and stored functions
 * Testing
 * Exception handling
 * tidy-up constructors (improve readbility), rename variables, add comments, make certain variables private in scope.
 * refeactor initial java code (remove certain parent/ child classes)
 * Format (DOUBLE) price so that it is to 2 decimal 
-* Update SQL queries
-* change the basket database to have user id, rather than a collection of multiple baskets
-* Checkout compeltion method
-* update display frame
+* Checkout compeletion method
 * upload the Project spec
 * upload ERD and UML diagram
-* Improve this readme file
 * Upload SQL script
 
 
