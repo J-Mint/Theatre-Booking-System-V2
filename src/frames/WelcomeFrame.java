@@ -46,7 +46,7 @@ public class WelcomeFrame extends JFrame {
 		loadUIStyle();
 		loadImageIcon();
 		loadFrameAndMainPanel();
-		loadWelcomePanel();
+		loadHeaderPanel();
 		loadBodyPanel();		
 	}
 
@@ -72,7 +72,7 @@ public class WelcomeFrame extends JFrame {
 		bodyPanel.setLayout(null);
 	}
 
-	private void loadWelcomePanel() {
+	private void loadHeaderPanel() {
 		JPanel headerPanel = new JPanel();
 		headerPanel.setBounds(0, 0, 800, 75);
 		mainPanel.add(headerPanel);

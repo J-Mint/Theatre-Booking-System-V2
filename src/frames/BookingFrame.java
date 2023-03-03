@@ -24,9 +24,10 @@ import DBConnector.*;
 public class BookingFrame extends JFrame {
 
 	private JPanel contentPane;
-	private int ticketCount;
+	private int ticketCount, userID;
 	private Double total;
 	private ArrayList<String[]> tempBasket;
+	
 
 	/**
 	 * Launch the application.
@@ -35,7 +36,7 @@ public class BookingFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BookingFrame frame = new BookingFrame("5", "10", 0);
+					BookingFrame frame = new BookingFrame("5", "10", 0, 0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,19 +48,14 @@ public class BookingFrame extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public BookingFrame(String circlePrice, String stallPrice, int userID) {
-		try { 
-		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
+	public BookingFrame(String circlePrice, String stallPrice, int userID, int performanceID) {
+		this.userID = userID;
+		loadUIStyle();
+		loadImageIcon();
 		tempBasket = new ArrayList<>();
 		ticketCount = 0;
 		total = 0.0;
-		String performanceID = "1";
-		ImageIcon icon = new ImageIcon("src/icon.png");
-		setIconImage(icon.getImage());
-		setTitle("Theatre Booking System V3");
+		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(000, 000, 800, 800);
@@ -93,12 +89,12 @@ public class BookingFrame extends JFrame {
 
 		JLabel lblCount = new JLabel("" + ticketCount);
 		lblCount.setFont(new Font("Arial", Font.PLAIN, 16));
-		lblCount.setBounds(126, 625, 72, 14);
+		lblCount.setBounds(364, 625, 72, 14);
 		panel_1.add(lblCount);
 
 		JLabel lblTotal1 = new JLabel("");
 		lblTotal1.setFont(new Font("Arial", Font.PLAIN, 16));
-		lblTotal1.setBounds(126, 648, 72, 14);
+		lblTotal1.setBounds(364, 650, 72, 14);
 		panel_1.add(lblTotal1);
 
 		for (int i = 1; i <= 120; i++) {
@@ -131,13 +127,13 @@ public class BookingFrame extends JFrame {
 									lblCount.setText("" + ticketCount);
 									if (choice == 0) {
 										double price = Double.parseDouble(stallPrice);
-										String[] order = { performanceID, "Standard", seatID, ""+price};
+										String[] order = { (""+performanceID), "Standard", seatID, ""+price};
 										tempBasket.add(order);
 										total += price;
 										lblTotal1.setText("" + total);
 									} else {
 										double price = ((Double.parseDouble(stallPrice)) * 3.0 / 4.0);
-										String[] order = { performanceID, "Concession", seatID, ""+price };
+										String[] order = { (""+performanceID), "Concession", seatID, ""+price };
 										tempBasket.add(order);
 										total += price;
 										lblTotal1.setText("" + total);
@@ -195,14 +191,16 @@ public class BookingFrame extends JFrame {
 									lblCount.setText("" + ticketCount);
 									if (choice == 0) {
 										Double price = Double.parseDouble(circlePrice);;
-										String[] order = { performanceID, "Standard", seatID, ""+price  };
+										String[] order = { (""+performanceID), "Standard", seatID, ""+price  };
 										tempBasket.add(order);
-										lblTotal1.setText("" + price);
+										total += price;
+										lblTotal1.setText(""+total);
 									} else {
 										Double price = ((Double.parseDouble(circlePrice)) * 3.0 / 4.0);
-										String[] order = { performanceID, "Concession", seatID, ""+price};
+										String[] order = { (""+performanceID), "Concession", seatID, ""+price};
 										tempBasket.add(order);
-										lblTotal1.setText("" + price);
+										total += price;
+										lblTotal1.setText("" + total);
 
 									}
 								}
@@ -232,24 +230,24 @@ public class BookingFrame extends JFrame {
 
 		JLabel lblNewLabel = new JLabel("Ticket count:");
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-		lblNewLabel.setBounds(10, 623, 113, 14);
+		lblNewLabel.setBounds(270, 625, 113, 14);
 		panel_1.add(lblNewLabel);
 
 		JLabel lblTotal = new JLabel("Total:\r\n");
 		lblTotal.setFont(new Font("Arial", Font.PLAIN, 16));
-		lblTotal.setBounds(10, 648, 113, 14);
+		lblTotal.setBounds(270, 650, 113, 14);
 		panel_1.add(lblTotal);
 
 		JButton btnNewButton_1 = new JButton("Add to basket");
 		btnNewButton_1.setFont(new Font("Arial", Font.PLAIN, 16));
-		btnNewButton_1.setBounds(204, 614, 570, 59);
+		btnNewButton_1.setBounds(437, 614, 337, 59);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// add array objects to basket
 				DBConnector DBC = new DBConnector();
 				DBC.connect();
 				for (String[] i : tempBasket) {
-					String query = "INSERT INTO basket (performance_id, standard_or_concession, seat_id, price) VALUES ("+i[0]+", '"+i[1]+"', "+i[2]+","+i[3]+")";
+					String query = "INSERT INTO basket (user_id, performance_id, standard_or_concession, seat_id, price) VALUES ('"+userID+"', "+i[0]+", '"+i[1]+"', "+i[2]+","+i[3]+")";
 					DBC.runQuery(query);
 					query = "UPDATE seats SET seat_booked=true WHERE performance_id="+i[0]+" AND seat_id="+i[2];
 					DBC.runQuery(query);
@@ -264,6 +262,25 @@ public class BookingFrame extends JFrame {
 			}
 		});
 		panel_1.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("Cancel");
+		btnNewButton_2.setFont(new Font("Arial", Font.PLAIN, 16));
+		btnNewButton_2.setBounds(10, 614, 248, 59);
+		panel_1.add(btnNewButton_2);
 
+	}
+
+	private void loadImageIcon() {
+		ImageIcon icon = new ImageIcon("src/icon.png");
+		setIconImage(icon.getImage());
+		setTitle("Theatre Booking System V3");
+	}
+
+	private void loadUIStyle() {
+		try { 
+		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 	}
 }

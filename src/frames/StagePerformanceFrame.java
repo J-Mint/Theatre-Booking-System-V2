@@ -174,6 +174,7 @@ public class StagePerformanceFrame extends JFrame {
 		panel_1.add(btnNewButton_1);
 
 		JButton btnNewButton = new JButton("Stage this performance");
+		
 		btnNewButton.setFont(new Font("Arial", Font.PLAIN, 16));
 		btnNewButton.setBounds(290, 623, 482, 50);
 		panel_1.add(btnNewButton);
@@ -260,7 +261,7 @@ public class StagePerformanceFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				dispose();
-				AdminMenuFrame aframe = new AdminMenuFrame("1");
+				AdminMenuFrame aframe = new AdminMenuFrame(1);
 				aframe.setVisible(true);
 			}
 		});
@@ -280,6 +281,41 @@ public class StagePerformanceFrame extends JFrame {
 			}
 		});
 
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				DBC.connect();
+				String query = "CALL stagePerformance("+textField_1.getText()+", '"+textField.getText()+"', '"+comboBox.getSelectedItem().toString()+"', "+ textField_2.getText() +", "+textField_3.getText()+")";
+				DBC.runQuery(query);
+				query = "SELECT performance_id FROM performances WHERE date='"+textField.getText()+"' AND stage_time='"+comboBox.getSelectedItem().toString()+"'";
+				ResultSet rs = DBC.runQuery(query);
+				String performanceID = "";
+				try {
+					while (rs.next()) {
+					performanceID = rs.getString(1);
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				for (int i = 1; i <= 200; i++) {
+					int seat_id = i;
+					String seatType;
+					if (i <=120) {
+						seatType = "stall";
+					} else {
+						seatType = "circle";
+					}
+				int seatBooked = 0;
+				query = "INSERT INTO seats (seat_id, performance_id, seat_type, seat_booked) VALUES ("+seat_id+", "+performanceID +", '"+seatType+"', '"+seatBooked+"')";
+					DBC.runQuery(query);
+				}
+				DBC.close();
+				//success
+				//
+				
+			}
+		});
 
 	}
 }

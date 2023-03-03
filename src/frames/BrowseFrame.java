@@ -39,6 +39,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
 
 public class BrowseFrame extends JFrame {
 
@@ -46,6 +47,7 @@ public class BrowseFrame extends JFrame {
 	private JTable table;
 	private JTextField txtKeywords;
 	private DefaultTableModel model;
+	private int userID;
 
 	/**
 	 * Launch the application.
@@ -54,7 +56,7 @@ public class BrowseFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BrowseFrame frame = new BrowseFrame(0);
+					BrowseFrame frame = new BrowseFrame(1);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,6 +69,7 @@ public class BrowseFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public BrowseFrame(int userID) {
+		this.userID = userID;
 		try { 
 		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
@@ -111,7 +114,22 @@ public class BrowseFrame extends JFrame {
 		panel_1.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
+		if (this.userID == 1) {
+			scrollPane.setBounds(12, 42, 760, 500);
+			JButton btnNewButton_2 = new JButton("Back to Admin Menu");
+			btnNewButton_2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+					AdminMenuFrame aframe = new AdminMenuFrame(1);
+					aframe.setVisible(true);
+				}
+			});
+			btnNewButton_2.setFont(new Font("Arial", Font.PLAIN, 16));
+			btnNewButton_2.setBounds(12, 562, 760, 50);
+			panel_1.add(btnNewButton_2);
+		} else {
 		scrollPane.setBounds(12, 42, 760, 570);
+		}
 		panel_1.add(scrollPane);
 
 		table = new JTable();
@@ -190,7 +208,7 @@ public class BrowseFrame extends JFrame {
 				int index = table.getSelectedRow();
 				int performanceID = Integer.parseInt((String) model.getValueAt(index, 0));
 				dispose();
-				ShowDetailedFrame dframe = new ShowDetailedFrame(performanceID, userID);
+				ShowDetailedInfoFrame dframe = new ShowDetailedInfoFrame(performanceID, userID);
 				dframe.setVisible(true);
 				
 				
@@ -199,6 +217,7 @@ public class BrowseFrame extends JFrame {
 		}	
 		});
 		panel_1.add(btnNewButton);
+
 
 	}
 }

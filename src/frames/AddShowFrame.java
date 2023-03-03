@@ -21,6 +21,11 @@ import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.DefaultComboBoxModel;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class AddShowFrame extends JFrame {
 
@@ -32,7 +37,7 @@ public class AddShowFrame extends JFrame {
 	private JTextField languageTextfield;
 	private String showType;
 	private boolean liveMusic;
-	private JRadioButton yesLiveMusicRadioButton, noLiveMusicRadioButton;
+	private JComboBox liveComboBox;
 
 	/**
 	 * Launch the application.
@@ -54,16 +59,10 @@ public class AddShowFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public AddShowFrame() {
-		showType = "Theatre";
+		showType = "Musical";
+		loadUIStyle();
+		loadImageIcon();
 		
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		ImageIcon icon = new ImageIcon("src/icon.png");
-		setIconImage(icon.getImage());
-		setTitle("Theatre Booking System V3");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(000, 000, 800, 800);
@@ -121,21 +120,28 @@ public class AddShowFrame extends JFrame {
 		addShowButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				DBConnector DBC = new DBConnector();
-				String query = "CALL insertShow('" + titleTextfield.getText() + "', '" + showType + "', '" + descriptionTextfield.getText() + "', " + durationTextfield.getText() + ", '" + languageTextfield.getText() + "' , " + liveMusic + ", '"+performersTextfield.getText()+"')";
+				DBC.connect();
+				String query = "CALL insertShow('" + titleTextfield.getText() + "', '" + showType + "', '"
+						+ descriptionTextfield.getText() + "', " + durationTextfield.getText() + ", '"
+						+ languageTextfield.getText() + "' , " + liveMusic + ", '" + performersTextfield.getText()
+						+ "')";
 				try {
 					DBC.runQuery(query);
-				} catch (Exception e1) {}
-				
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				DBC.close();
+
 				// get confirmation that it worked???
-				dispose();
-				AdminMenuFrame aframe = new AdminMenuFrame("1");
-				aframe.setVisible(true);
+//				dispose();
+//				AdminMenuFrame aframe = new AdminMenuFrame("1");
+//				aframe.setVisible(true);
 			}
-			
+
 		});
-		addShowButton.setBounds(642, 617, 89, 23);
+		addShowButton.setBounds(255, 638, 519, 35);
 		panel_1.add(addShowButton);
 
 		JButton cancelButton = new JButton("Cancel");
@@ -143,11 +149,11 @@ public class AddShowFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				dispose();
-				AdminMenuFrame aframe = new AdminMenuFrame("1");
+				AdminMenuFrame aframe = new AdminMenuFrame(1);
 				aframe.setVisible(true);
 			}
 		});
-		cancelButton.setBounds(43, 617, 89, 23);
+		cancelButton.setBounds(10, 638, 235, 35);
 		panel_1.add(cancelButton);
 
 		titleTextfield = new JTextField();
@@ -169,118 +175,101 @@ public class AddShowFrame extends JFrame {
 		performersTextfield.setBounds(167, 303, 519, 35);
 		panel_1.add(performersTextfield);
 		performersTextfield.setColumns(10);
-		enablePerformers(false);
+//		enablePerformers(false);
 
-		ButtonGroup typeGroup = new ButtonGroup();
-		ButtonGroup liveMusicGroup = new ButtonGroup();
-		
-		yesLiveMusicRadioButton = new JRadioButton("Yes", false);
-		yesLiveMusicRadioButton.setEnabled(false);
-		yesLiveMusicRadioButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (showType != "Theatre") {
-				enablePerformers(true);
-				liveMusic = true;
-				}
-				
-			}
-		});
-		yesLiveMusicRadioButton.setBounds(167, 257, 109, 35);
-		panel_1.add(yesLiveMusicRadioButton);
-		liveMusicGroup.add(yesLiveMusicRadioButton);
-		
-		noLiveMusicRadioButton = new JRadioButton("No", true);
-		noLiveMusicRadioButton.setEnabled(false);
-		noLiveMusicRadioButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				enablePerformers(false);
-				liveMusic = false;
-			}
-		});
-		noLiveMusicRadioButton.setBounds(278, 257, 109, 35);
-		panel_1.add(noLiveMusicRadioButton);
-		liveMusicGroup.add(noLiveMusicRadioButton);
-
-		
-		
-		JRadioButton theatreRadioButton = new JRadioButton("Theatre");
-		theatreRadioButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				showType = "Theatre";
-				enableLanguage(true);
-				enableLiveMusic(false);
-				enablePerformers(false);
-				
-			}
-		});
-		theatreRadioButton.setBounds(500, 165, 109, 35);
-		panel_1.add(theatreRadioButton);
-		typeGroup.add(theatreRadioButton);
-
-		JRadioButton concertRadioButton = new JRadioButton("Concert");
-		concertRadioButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				showType = "Concert";
-				enableLanguage(false);
-				enableLiveMusic(true);
-			}
-		});
-		concertRadioButton.setBounds(167, 165, 109, 35);
-		panel_1.add(concertRadioButton);
-		typeGroup.add(concertRadioButton);
-
-		JRadioButton musicalRadioButton = new JRadioButton("Musical");
-		musicalRadioButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				showType = "Musical";
-				enableLanguage(true);
-				enableLiveMusic(true);
-			}
-		});
-		musicalRadioButton.setBounds(278, 165, 109, 35);
-		panel_1.add(musicalRadioButton);
-		typeGroup.add(musicalRadioButton);
-
-		JRadioButton operaRadioButton = new JRadioButton("Opera");
-		operaRadioButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				showType = "Opera";
-				enableLanguage(true);
-				enableLiveMusic(true);
-			}
-		});
-		operaRadioButton.setBounds(389, 165, 109, 35);
-		panel_1.add(operaRadioButton);
-		typeGroup.add(operaRadioButton);
-
-		
 		languageTextfield = new JTextField();
 		languageTextfield.setBounds(167, 211, 519, 35);
 		panel_1.add(languageTextfield);
 		languageTextfield.setColumns(10);
 
+		JComboBox typeComboBox = new JComboBox();
+		typeComboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				int typeIndex = typeComboBox.getSelectedIndex();
+				if (typeIndex == 0) {
+					showType = "Concert";
+					enableLanguage(false);
+					enableLiveMusicBox(true);
+				} else if (typeIndex == 1 || typeIndex == 2) {
+					enableLanguage(true);
+					enableLiveMusicBox(true);
+					if (typeIndex == 1) {
+						showType = "Musical";
+					} else {
+						showType = "Opera";
+					}
+				} else {
+					enableLanguage(true);
+					enableLiveMusicBox(false);
+					showType = "Theatre";
+					enablePerformers(false);
+				}
+			}
+		});
+
+		typeComboBox.setModel(new DefaultComboBoxModel(new String[] { "Concert", "Musical", "Opera", "Theatre" }));
+		typeComboBox.setFont(new Font("Arial", Font.PLAIN, 16));
+		typeComboBox.setBounds(167, 163, 519, 35);
+		panel_1.add(typeComboBox);
+		
+
+		liveComboBox = new JComboBox();
+		liveComboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				int liveIndex = liveComboBox.getSelectedIndex();
+				if (liveIndex == 0) {
+					liveMusic = true;
+					enablePerformers(true);
+					
+				} else {
+					liveMusic = false;
+					enablePerformers(false);
+				}
+			}
+		});
+		liveComboBox.setModel(new DefaultComboBoxModel(new String[] { "Yes", "No" }));
+		liveComboBox.setFont(new Font("Arial", Font.PLAIN, 16));
+		liveComboBox.setBounds(167, 257, 519, 35);
+		panel_1.add(liveComboBox);
+		typeComboBox.setSelectedIndex(1);
+	}
+
+	public void loadImageIcon() {
+		ImageIcon icon = new ImageIcon("src/icon.png");
+		setIconImage(icon.getImage());
+		setTitle("Theatre Booking System V3");
+	}
+
+	public void loadUIStyle() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void enableLanguage(boolean value) {
 		languageTextfield.setEnabled(value);
+		if (value == false) {
+			languageTextfield.setText("");
+		}
 	}
 
-	public void enableLiveMusic(boolean value) {
-		yesLiveMusicRadioButton.setEnabled(value);
-		noLiveMusicRadioButton.setEnabled(value);
+	public void enableLiveMusicBox(boolean value) {
+		liveComboBox.setEnabled(value);
 		if (liveMusic) {
 			enablePerformers(true);
+		} else {
+			liveComboBox.setSelectedIndex(1);
 		}
 	}
 
 	public void enablePerformers(boolean value) {
 		performersTextfield.setEnabled(value);
+		if (value == false) {
+			performersTextfield.setText("");
+		}
+
 	}
 
 }

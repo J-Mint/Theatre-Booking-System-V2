@@ -29,6 +29,7 @@ public class BasketFrame extends JFrame {
 	private DefaultTableModel model;
 	private JLabel totalValueLabel;
 	private String price, concessionCount, ticketCount, soonestDate;
+	private int userID;
 
 	/**
 	 * Launch the application.
@@ -51,6 +52,7 @@ public class BasketFrame extends JFrame {
 	 * @param userID 
 	 */
 	public BasketFrame(int userID) {
+		this.userID= userID;
 		try { 
 		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
@@ -167,7 +169,7 @@ public class BasketFrame extends JFrame {
 		model = (DefaultTableModel) table.getModel();
 		DBConnector DBC = new DBConnector();
 		DBC.connect();
-		String query = "SELECT performances.performance_id, seat_id, standard_or_concession,  price, show_name, type , date, stage_time, duration, description  FROM basket JOIN performances ON basket.performance_id  JOIN shows ON performances.show_id WHERE basket.performance_id = performances.performance_id AND shows.show_id = performances.show_id";
+		String query = "SELECT performances.performance_id, seat_id, standard_or_concession,  price, show_name, type , date, stage_time, duration, description  FROM basket JOIN performances ON basket.performance_id = performances.performance_id  JOIN shows ON performances.show_id = shows.show_id WHERE user_id="+userID;
 		ResultSet rs = DBC.runQuery(query);
 		model.setColumnIdentifiers(cols);
 		try {
@@ -183,7 +185,7 @@ public class BasketFrame extends JFrame {
 			e.printStackTrace();
 		}
 		
-		query = "SELECT SUM(price) FROM basket";
+		query = "SELECT SUM(price) FROM basket WHERE user_id="+userID;
 		rs = DBC.runQuery(query);
 		try {
 			while (rs.next()) {
@@ -195,7 +197,7 @@ public class BasketFrame extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		query = "SELECT COUNT(*) FROM basket WHERE standard_or_concession='Concession'";
+		query = "SELECT COUNT(*) FROM basket WHERE standard_or_concession='Concession' AND user_id="+userID;
 		rs = DBC.runQuery(query);
 		try {
 			while (rs.next()) {
@@ -206,7 +208,7 @@ public class BasketFrame extends JFrame {
 			e.printStackTrace();
 		}
 		
-		query = "SELECT COUNT(*) FROM basket";
+		query = "SELECT COUNT(*) FROM basket WHERE user_id="+userID;
 		rs = DBC.runQuery(query);
 		try {
 			while (rs.next()) {
@@ -217,7 +219,7 @@ public class BasketFrame extends JFrame {
 			e.printStackTrace();
 		}
 		
-		query = "SELECT MIN(date) FROM basket JOIN performances ON basket.performance_id  JOIN shows ON performances.show_id WHERE basket.performance_id = performances.performance_id AND shows.show_id = performances.show_id";
+		query = "SELECT MIN(date) FROM basket JOIN performances ON basket.performance_id=performances.performance_id  JOIN shows ON performances.show_id = shows.show_id WHERE user_id="+userID;
 		rs = DBC.runQuery(query);
 		try {
 			while (rs.next()) {

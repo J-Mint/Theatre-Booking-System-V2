@@ -26,7 +26,7 @@ public class AdminMenuFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdminMenuFrame frame = new AdminMenuFrame("1");
+					AdminMenuFrame frame = new AdminMenuFrame(1);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,15 +39,10 @@ public class AdminMenuFrame extends JFrame {
 	 * Create the frame.
 	 * @param userID 
 	 */
-	public AdminMenuFrame(String userID) {
-		try { 
-		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
-		ImageIcon icon = new ImageIcon("src/icon.png");
-		setIconImage(icon.getImage());
-		setTitle("Theatre Booking System V3");
+	public AdminMenuFrame(int userID) {
+		loadUIStyle();
+		loadImageIcon();
+		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(000, 000, 800, 800);
@@ -141,5 +136,19 @@ public class AdminMenuFrame extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(0, 77, 784, 684);
 
+	}
+
+	private void loadImageIcon() {
+		ImageIcon icon = new ImageIcon("src/icon.png");
+		setIconImage(icon.getImage());
+		setTitle("Theatre Booking System V3");
+	}
+
+	private void loadUIStyle() {
+		try { 
+		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 	}
 }

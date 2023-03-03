@@ -142,7 +142,7 @@ public class LoginFrame extends JFrame {
 						if (userID == 1) {
 							JOptionPane.showMessageDialog(frame, "Login Successful");
 							dispose();
-							AdminMenuFrame adframe = new AdminMenuFrame("admin");
+							AdminMenuFrame adframe = new AdminMenuFrame(1);
 							adframe.setVisible(true);
 						} else {
 							JOptionPane.showMessageDialog(frame, "Login Successful");
