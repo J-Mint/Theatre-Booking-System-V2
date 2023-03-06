@@ -20,14 +20,13 @@ https://user-images.githubusercontent.com/112823669/218261108-b97a4934-b796-4759
 ## To do:
 * SQL Triggers and stored functions
 * Testing
-* Exception handling
-* tidy-up constructors (improve readbility), rename variables, add comments, make certain variables private in scope.
-* refeactor initial java code (remove certain parent/ child classes)
+* Error/ exception handling
+* rename variables, add comments, make certain variables private in scope and break up methods.
 * Format (DOUBLE) price so that it is to 2 decimal 
-* Checkout compeletion method
-* upload the Project spec
 * upload ERD and UML diagram
 * Upload SQL script
+* UI tweaks: improve consistency (same: font type, font size, case, button placement and size; tables: remove grids, make only 1 row selectable).
+
 
 
 
