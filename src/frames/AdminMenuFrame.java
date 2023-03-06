@@ -19,53 +19,23 @@ public class AdminMenuFrame extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AdminMenuFrame frame = new AdminMenuFrame(1);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the frame.
-	 * @param userID 
-	 */
 	public AdminMenuFrame(int userID) {
 		loadUIStyle();
 		loadImageIcon();
+		configureFrame();
+		configureContentPane();
+		configureHeaderPanel();
+		configureBodyPanel();
 		
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(000, 000, 800, 800);
-		contentPane = new JPanel();
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 800, 75);
-		contentPane.add(panel);
-		
-		JLabel headerLabel = new JLabel();
-		headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		headerLabel.setBounds(0, 0, 777, 75);
-		headerLabel.setBackground(SystemColor.menu);
-		headerLabel.setFont(new Font("Arial", Font.BOLD, 46));
-		headerLabel.setText("ADMIN MENU");
-		panel.setLayout(null);
-		panel.add(headerLabel);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(0, 73, 784, 688);
-		contentPane.add(panel_2);
+		//centre application on screen
+		setLocationRelativeTo(null);
+	}
+
+	private void configureBodyPanel() {
+		JPanel bodyPanel = new JPanel();
+		bodyPanel.setBounds(0, 73, 784, 688);
+		contentPane.add(bodyPanel);
 		
 		JButton stagePerformanceButton = new JButton("Stage Performance");
 		stagePerformanceButton.addMouseListener(new MouseAdapter() {
@@ -76,7 +46,7 @@ public class AdminMenuFrame extends JFrame {
 				sframe.setVisible(true);	
 			}
 		});
-		panel_2.add(stagePerformanceButton);
+		bodyPanel.add(stagePerformanceButton);
 		
 		JButton addShowButton = new JButton("Add Show");
 		addShowButton.addMouseListener(new MouseAdapter() {
@@ -87,7 +57,7 @@ public class AdminMenuFrame extends JFrame {
 				aframe.setVisible(true);
 			}
 		});
-		panel_2.add(addShowButton);
+		bodyPanel.add(addShowButton);
 		
 		JButton removeShowButton = new JButton("Remove Show");
 		removeShowButton.addMouseListener(new MouseAdapter() {
@@ -98,7 +68,7 @@ public class AdminMenuFrame extends JFrame {
 				rframe.setVisible(true);
 			}
 		});
-		panel_2.add(removeShowButton);
+		bodyPanel.add(removeShowButton);
 		
 		JButton removePerformanceButton = new JButton("Remove Performance");
 		removePerformanceButton.addMouseListener(new MouseAdapter() {
@@ -109,7 +79,7 @@ public class AdminMenuFrame extends JFrame {
 				rpframe.setVisible(true);
 			}
 		});
-		panel_2.add(removePerformanceButton);
+		bodyPanel.add(removePerformanceButton);
 		
 		JButton logoutButton = new JButton("Logout");
 		logoutButton.addMouseListener(new MouseAdapter() {
@@ -120,7 +90,7 @@ public class AdminMenuFrame extends JFrame {
 				wframe.setVisible(true);
 			}
 		});
-		panel_2.add(logoutButton);
+		bodyPanel.add(logoutButton);
 		
 		JButton browseButton = new JButton("Browse shows");
 		browseButton.addMouseListener(new MouseAdapter() {
@@ -131,11 +101,35 @@ public class AdminMenuFrame extends JFrame {
 				bframe.setVisible(true);
 			}
 		});
-		panel_2.add(browseButton);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 77, 784, 684);
+		bodyPanel.add(browseButton);
+	}
 
+	private void configureHeaderPanel() {
+		JPanel headerPanel = new JPanel();
+		headerPanel.setBounds(0, 0, 800, 75);
+		contentPane.add(headerPanel);
+		
+		JLabel headerLabel = new JLabel();
+		headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		headerLabel.setBounds(0, 0, 777, 75);
+		headerLabel.setBackground(SystemColor.menu);
+		headerLabel.setFont(new Font("Arial", Font.BOLD, 46));
+		headerLabel.setText("ADMIN MENU");
+		headerPanel.setLayout(null);
+		headerPanel.add(headerLabel);
+	}
+
+	private void configureContentPane() {
+		contentPane = new JPanel();
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+	}
+
+	private void configureFrame() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(000, 000, 800, 800);
+		
+		
 	}
 
 	private void loadImageIcon() {

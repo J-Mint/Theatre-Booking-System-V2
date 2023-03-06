@@ -40,152 +40,82 @@ public class AddShowFrame extends JFrame {
 	private boolean liveMusic;
 	private JComboBox liveComboBox;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AddShowFrame frame = new AddShowFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public AddShowFrame() {
 		showType = "Musical";
 		loadUIStyle();
 		loadImageIcon();
-		
+		configureFrame();
+		configureContentPane();
+		configureHeaderPanel();
+		configureBodyPanel();
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(000, 000, 800, 800);
-		contentPane = new JPanel();
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		// centre application on screen
+		setLocationRelativeTo(null);
+	}
 
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 800, 75);
-		contentPane.add(panel);
+	private void configureBodyPanel() {
+		// create a new panel for body content
+		JPanel bodyPanel = new JPanel();
+		bodyPanel.setBounds(0, 77, 784, 684);
+		contentPane.add(bodyPanel);
+		bodyPanel.setLayout(null);
 
-		JLabel checkoutLabel = new JLabel();
-		checkoutLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		checkoutLabel.setBounds(0, 0, 777, 75);
-		checkoutLabel.setBackground(SystemColor.menu);
-		checkoutLabel.setFont(new Font("Arial", Font.BOLD, 46));
-		checkoutLabel.setText("Add a Show");
-		panel.setLayout(null);
-		panel.add(checkoutLabel);
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 77, 784, 684);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
-
+		// create the labels to define what should go in each text field.
 		JLabel titleLabel = new JLabel("Title");
 		titleLabel.setBounds(43, 28, 89, 35);
-		panel_1.add(titleLabel);
+		bodyPanel.add(titleLabel);
 
 		JLabel descriptionLabel = new JLabel("Description");
 		descriptionLabel.setBounds(43, 74, 89, 34);
-		panel_1.add(descriptionLabel);
+		bodyPanel.add(descriptionLabel);
 
 		JLabel durationLabel = new JLabel("Duration");
 		durationLabel.setBounds(43, 119, 89, 35);
-		panel_1.add(durationLabel);
+		bodyPanel.add(durationLabel);
 
 		JLabel typeLabel = new JLabel("Type");
 		typeLabel.setBounds(43, 165, 89, 35);
-		panel_1.add(typeLabel);
+		bodyPanel.add(typeLabel);
 
 		JLabel languageLabel = new JLabel("Language");
 		languageLabel.setBounds(43, 211, 89, 35);
-		panel_1.add(languageLabel);
+		bodyPanel.add(languageLabel);
 
 		JLabel liveMusicLabel = new JLabel("Live music");
 		liveMusicLabel.setBounds(43, 257, 89, 35);
-		panel_1.add(liveMusicLabel);
+		bodyPanel.add(liveMusicLabel);
 
 		JLabel performersLabel = new JLabel("Performers");
 		performersLabel.setBounds(43, 303, 89, 35);
-		panel_1.add(performersLabel);
+		bodyPanel.add(performersLabel);
 
-		JButton addShowButton = new JButton("Add show");
-		addShowButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				DBConnector DBC = new DBConnector();
-				DBC.connect();
-				String query = "CALL insertShow('" + titleTextfield.getText() + "', '" + showType + "', '"
-						+ descriptionTextfield.getText() + "', " + durationTextfield.getText() + ", '"
-						+ languageTextfield.getText() + "' , " + liveMusic + ", '" + performersTextfield.getText()
-						+ "')";
-				try {
-					DBC.runQuery(query);
-					
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				DBC.close();
-
-				// get confirmation that it worked???
-				JFrame frame = new JFrame("");
-				JOptionPane.showMessageDialog(frame, "Show Added Successfully.");
-				dispose();
-				AdminMenuFrame aframe = new AdminMenuFrame(1);
-				aframe.setVisible(true);
-			}
-
-		});
-		addShowButton.setBounds(255, 638, 519, 35);
-		panel_1.add(addShowButton);
-
-		JButton cancelButton = new JButton("Cancel");
-		cancelButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				dispose();
-				AdminMenuFrame aframe = new AdminMenuFrame(1);
-				aframe.setVisible(true);
-			}
-		});
-		cancelButton.setBounds(10, 638, 235, 35);
-		panel_1.add(cancelButton);
-
+		// create the text fields to get user input.
 		titleTextfield = new JTextField();
 		titleTextfield.setBounds(167, 27, 519, 35);
-		panel_1.add(titleTextfield);
+		bodyPanel.add(titleTextfield);
 		titleTextfield.setColumns(10);
 
 		descriptionTextfield = new JTextField();
 		descriptionTextfield.setBounds(167, 74, 519, 35);
-		panel_1.add(descriptionTextfield);
+		bodyPanel.add(descriptionTextfield);
 		descriptionTextfield.setColumns(10);
 
 		durationTextfield = new JTextField();
 		durationTextfield.setBounds(167, 119, 519, 35);
-		panel_1.add(durationTextfield);
+		bodyPanel.add(durationTextfield);
 		durationTextfield.setColumns(10);
 
 		performersTextfield = new JTextField();
 		performersTextfield.setBounds(167, 303, 519, 35);
-		panel_1.add(performersTextfield);
+		bodyPanel.add(performersTextfield);
 		performersTextfield.setColumns(10);
-//		enablePerformers(false);
 
 		languageTextfield = new JTextField();
 		languageTextfield.setBounds(167, 211, 519, 35);
-		panel_1.add(languageTextfield);
+		bodyPanel.add(languageTextfield);
 		languageTextfield.setColumns(10);
 
+		// create a drop down menu to limit user input
 		JComboBox typeComboBox = new JComboBox();
 		typeComboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -210,13 +140,10 @@ public class AddShowFrame extends JFrame {
 				}
 			}
 		});
-
 		typeComboBox.setModel(new DefaultComboBoxModel(new String[] { "Concert", "Musical", "Opera", "Theatre" }));
 		typeComboBox.setFont(new Font("Arial", Font.PLAIN, 16));
 		typeComboBox.setBounds(167, 163, 519, 35);
-		panel_1.add(typeComboBox);
-		
-
+		bodyPanel.add(typeComboBox);
 		liveComboBox = new JComboBox();
 		liveComboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -224,7 +151,7 @@ public class AddShowFrame extends JFrame {
 				if (liveIndex == 0) {
 					liveMusic = true;
 					enablePerformers(true);
-					
+
 				} else {
 					liveMusic = false;
 					enablePerformers(false);
@@ -234,32 +161,78 @@ public class AddShowFrame extends JFrame {
 		liveComboBox.setModel(new DefaultComboBoxModel(new String[] { "Yes", "No" }));
 		liveComboBox.setFont(new Font("Arial", Font.PLAIN, 16));
 		liveComboBox.setBounds(167, 257, 519, 35);
-		panel_1.add(liveComboBox);
+		bodyPanel.add(liveComboBox);
 		typeComboBox.setSelectedIndex(1);
+
+		// create the buttons to confirm and cancel
+		JButton addShowButton = new JButton("Add show");
+		addShowButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				DBConnector DBC = new DBConnector();
+				DBC.connect();
+				String query = "CALL insertShow('" + titleTextfield.getText() + "', '" + showType + "', '"
+						+ descriptionTextfield.getText() + "', " + durationTextfield.getText() + ", '"
+						+ languageTextfield.getText() + "' , " + liveMusic + ", '" + performersTextfield.getText()
+						+ "')";
+				try {
+					DBC.runQuery(query);
+
+				} catch (Exception e1) {
+					JFrame frame = new JFrame("");
+					JOptionPane.showMessageDialog(frame,
+							"There was an error adding the show. Try adjusting the input formats.");
+				}
+				DBC.close();
+				JFrame frame = new JFrame("");
+				JOptionPane.showMessageDialog(frame, "Show Added Successfully.");
+				// go back to the admin menu frame
+				dispose();
+				AdminMenuFrame aframe = new AdminMenuFrame(1);
+				aframe.setVisible(true);
+			}
+
+		});
+		addShowButton.setBounds(255, 638, 519, 35);
+		bodyPanel.add(addShowButton);
+
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				AdminMenuFrame aframe = new AdminMenuFrame(1);
+				aframe.setVisible(true);
+			}
+		});
+		cancelButton.setBounds(10, 638, 235, 35);
+		bodyPanel.add(cancelButton);
+
 	}
 
-	public void loadImageIcon() {
-		ImageIcon icon = new ImageIcon("src/icon.png");
-		setIconImage(icon.getImage());
-		setTitle("Theatre Booking System V3");
+	private void configureHeaderPanel() {
+		JPanel headerPanel = new JPanel();
+		headerPanel.setBounds(0, 0, 800, 75);
+		contentPane.add(headerPanel);
+		JLabel checkoutLabel = new JLabel();
+		checkoutLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		checkoutLabel.setBounds(0, 0, 777, 75);
+		checkoutLabel.setBackground(SystemColor.menu);
+		checkoutLabel.setFont(new Font("Arial", Font.BOLD, 46));
+		checkoutLabel.setText("Add a Show");
+		headerPanel.setLayout(null);
+		headerPanel.add(checkoutLabel);
 	}
 
-	public void loadUIStyle() {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void enableLanguage(boolean value) {
+	private void enableLanguage(boolean value) {
 		languageTextfield.setEnabled(value);
 		if (value == false) {
 			languageTextfield.setText("");
 		}
 	}
 
-	public void enableLiveMusicBox(boolean value) {
+	private void enableLiveMusicBox(boolean value) {
 		liveComboBox.setEnabled(value);
 		if (liveMusic) {
 			enablePerformers(true);
@@ -268,12 +241,37 @@ public class AddShowFrame extends JFrame {
 		}
 	}
 
-	public void enablePerformers(boolean value) {
+	private void enablePerformers(boolean value) {
 		performersTextfield.setEnabled(value);
 		if (value == false) {
 			performersTextfield.setText("");
 		}
 
+	}
+
+	private void configureContentPane() {
+		contentPane = new JPanel();
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+	}
+
+	private void configureFrame() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(000, 000, 800, 800);
+	}
+
+	private void loadImageIcon() {
+		ImageIcon icon = new ImageIcon("src/icon.png");
+		setIconImage(icon.getImage());
+		setTitle("Theatre Booking System V3");
+	}
+
+	private void loadUIStyle() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

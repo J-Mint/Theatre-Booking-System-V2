@@ -29,13 +29,14 @@ public class LoginFrame extends JFrame {
 
 	private JPanel contentPane;
 
-	JLabel userLabel;
-	JLabel passwordLabel;
-	JTextField userTextField;
-	JPasswordField passwordField;
-	JButton loginButton;
-	JCheckBox showPassword;
+	private JLabel userLabel;
+	private JLabel passwordLabel;
+	private JTextField userTextField;
+	private JPasswordField passwordField;
+	private JButton loginButton;
+	private JCheckBox showPassword;
 	private JButton btnNewButton;
+	private int userID;
 
 	/**
 	 * Launch the application.
@@ -58,11 +59,19 @@ public class LoginFrame extends JFrame {
 	 * @param userID 
 	 */
 	public LoginFrame(int userID) {
-		try { 
-		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
+		this.userID = userID;
+		loadUIStyle();
+		loadImageIcon();
+		configureFrame();
+		configureContentPane();
+		configureHeaderPanel();
+		configureBodyPanel();
+		
+		//centre application on screen
+		setLocationRelativeTo(null);
+	}
+
+	private void configureBodyPanel() {
 		userLabel = new JLabel("USERNAME");
 		passwordLabel = new JLabel("PASSWORD");
 		userTextField = new JTextField();
@@ -80,29 +89,9 @@ public class LoginFrame extends JFrame {
 			}
 		});
 
-		ImageIcon icon = new ImageIcon("src/icon.png");
+		
 
-		setIconImage(icon.getImage());
-		setTitle("Theatre Booking System V3");
-
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(000, 000, 800, 800);
-		contentPane = new JPanel();
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 800, 75);
-		contentPane.add(panel);
-
-		JLabel welcomeLabel = new JLabel();
-		welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		welcomeLabel.setBounds(0, 0, 777, 75);
-		welcomeLabel.setBackground(SystemColor.menu);
-		welcomeLabel.setFont(new Font("Arial", Font.BOLD, 46));
-		welcomeLabel.setText("Login");
-		panel.setLayout(null);
-		panel.add(welcomeLabel);
+		
 
 		setLocationAndSize();
 		addComponentsToPane(userID);
@@ -160,7 +149,22 @@ public class LoginFrame extends JFrame {
 		});
 	}
 
-	public void setLocationAndSize() {
+	private void configureHeaderPanel() {
+		JPanel headerPanel = new JPanel();
+		headerPanel.setBounds(0, 0, 800, 75);
+		contentPane.add(headerPanel);
+
+		JLabel welcomeLabel = new JLabel();
+		welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		welcomeLabel.setBounds(0, 0, 777, 75);
+		welcomeLabel.setBackground(SystemColor.menu);
+		welcomeLabel.setFont(new Font("Arial", Font.BOLD, 46));
+		welcomeLabel.setText("Login");
+		headerPanel.setLayout(null);
+		headerPanel.add(welcomeLabel);
+	}
+
+	private void setLocationAndSize() {
 		userLabel.setBounds(10, 86, 764, 30);
 		passwordLabel.setBounds(10, 156, 100, 30);
 		userTextField.setBounds(110, 86, 664, 30);
@@ -170,7 +174,7 @@ public class LoginFrame extends JFrame {
 
 	}
 
-	public void addComponentsToPane(int userID) {
+	private void addComponentsToPane(int userID) {
 		contentPane.add(userLabel);
 		contentPane.add(passwordLabel);
 		contentPane.add(userTextField);
@@ -205,5 +209,29 @@ public class LoginFrame extends JFrame {
 		}
 		btnNewButton.setBounds(10, 659, 226, 40);
 		contentPane.add(btnNewButton);
+	}
+	private void configureContentPane() {
+		contentPane = new JPanel();
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+	}
+
+	private void configureFrame() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(000, 000, 800, 800);
+	}
+
+	private void loadImageIcon() {
+		ImageIcon icon = new ImageIcon("src/icon.png");
+		setIconImage(icon.getImage());
+		setTitle("Theatre Booking System V3");
+	}
+
+	private void loadUIStyle() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

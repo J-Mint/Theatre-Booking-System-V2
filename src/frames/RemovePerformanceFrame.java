@@ -138,10 +138,6 @@ public class RemovePerformanceFrame extends JFrame {
 				String query1 = "SELECT * FROM shows WHERE show_name LIKE '%" + searchText + "%' OR type LIKE '%"
 						+ searchText + "%' OR description LIKE '%" + searchText + "%' OR show_id LIKE '%" + searchText
 						+ "%' OR language LIKE '%" + searchText + "%' OR duration LIKE '%" + searchText + "%'";
-				// "SELECT performance_ID, show_name, type, description, date, stage_time,
-				// duration, circle_price, stall_price FROM performances JOIN shows on
-				// performances.show_id = shows.show_id WHERE show_name LIKE
-				// '%"+txtKeywords.getText()+"%'";
 				ResultSet rs1 = DBC.runQuery(query1);
 				model.setColumnIdentifiers(cols);
 				try {

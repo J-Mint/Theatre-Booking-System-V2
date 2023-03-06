@@ -49,69 +49,24 @@ public class BrowseFrame extends JFrame {
 	private DefaultTableModel model;
 	private int userID;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					BrowseFrame frame = new BrowseFrame(1);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
+	
 	public BrowseFrame(int userID) {
 		this.userID = userID;
-		try { 
-		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
-		ImageIcon icon = new ImageIcon("src/icon.png");
-		setIconImage(icon.getImage());
-		setTitle("Theatre Booking System V3");
+		loadUIStyle();
+		loadImageIcon();
+		configureFrame();
+		configureContentPane();
+		configureHeaderPanel();
+		configureBodyPanel();
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(000, 000, 800, 800);
-		contentPane = new JPanel();
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 800, 75);
-		contentPane.add(panel);
-
-		JLabel headerLabel = new JLabel();
-		headerLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (userID == 0 ) {
-				dispose();
-				LoginFrame lframe = new LoginFrame(userID);
-				lframe.setVisible(true);
-				}
-			}
-		});
-		headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		headerLabel.setBounds(0, 0, 777, 75);
-		headerLabel.setBackground(SystemColor.menu);
-		headerLabel.setFont(new Font("Arial", Font.BOLD, 46));
-		headerLabel.setText("Find a Show");
-		panel.setLayout(null);
-		panel.add(headerLabel);
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 77, 784, 684);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
+		//centre application on screen
+		setLocationRelativeTo(null);
+	}
+	private void configureBodyPanel() {
+		JPanel bodyPanel = new JPanel();
+		bodyPanel.setBounds(0, 77, 784, 684);
+		contentPane.add(bodyPanel);
+		bodyPanel.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
 		if (this.userID == 1) {
@@ -126,11 +81,11 @@ public class BrowseFrame extends JFrame {
 			});
 			btnNewButton_2.setFont(new Font("Arial", Font.PLAIN, 16));
 			btnNewButton_2.setBounds(12, 562, 760, 50);
-			panel_1.add(btnNewButton_2);
+			bodyPanel.add(btnNewButton_2);
 		} else {
 		scrollPane.setBounds(12, 42, 760, 570);
 		}
-		panel_1.add(scrollPane);
+		bodyPanel.add(scrollPane);
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
@@ -161,13 +116,13 @@ public class BrowseFrame extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 		lblNewLabel.setBounds(12, 0, 58, 29);
-		panel_1.add(lblNewLabel);
+		bodyPanel.add(lblNewLabel);
 
 		txtKeywords = new JTextField();
 		txtKeywords.setToolTipText("Type in a keyword (such as the title) to filter the results.");
 		txtKeywords.setFont(new Font("Arial", Font.PLAIN, 14));
 		txtKeywords.setBounds(76, 0, 591, 33);
-		panel_1.add(txtKeywords);
+		bodyPanel.add(txtKeywords);
 		txtKeywords.setColumns(10);
 		
 		JButton btnNewButton_1 = new JButton("Search");
@@ -197,7 +152,7 @@ public class BrowseFrame extends JFrame {
 				JOptionPane.showMessageDialog(null, "No row selected. Please select a row in the table to find tickets for that show.", "Error: No row selected",JOptionPane.ERROR_MESSAGE);
 		}	
 		});
-		panel_1.add(btnNewButton_1);
+		bodyPanel.add(btnNewButton_1);
 		
 		
 		JButton btnNewButton = new JButton("Find tickets");
@@ -216,8 +171,57 @@ public class BrowseFrame extends JFrame {
 				JOptionPane.showMessageDialog(null, "No row selected. Please select a row in the table to find tickets for that show.", "Error: No row selected",JOptionPane.ERROR_MESSAGE);
 		}	
 		});
-		panel_1.add(btnNewButton);
+		bodyPanel.add(btnNewButton);
 
+	}
 
+	private void configureHeaderPanel() {
+		JPanel headerPanel = new JPanel();
+		headerPanel.setBounds(0, 0, 800, 75);
+		contentPane.add(headerPanel);
+
+		JLabel headerLabel = new JLabel();
+		headerLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (userID == 0 ) {
+				dispose();
+				LoginFrame lframe = new LoginFrame(userID);
+				lframe.setVisible(true);
+				}
+			}
+		});
+		headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		headerLabel.setBounds(0, 0, 777, 75);
+		headerLabel.setBackground(SystemColor.menu);
+		headerLabel.setFont(new Font("Arial", Font.BOLD, 46));
+		headerLabel.setText("Find a Show");
+		headerPanel.setLayout(null);
+		headerPanel.add(headerLabel);
+	}
+
+	private void configureContentPane() {
+		contentPane = new JPanel();
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+	}
+
+	private void configureFrame() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(000, 000, 800, 800);
+	}
+
+	private void loadImageIcon() {
+		ImageIcon icon = new ImageIcon("src/icon.png");
+		setIconImage(icon.getImage());
+		setTitle("Theatre Booking System V3");
+	}
+
+	private void loadUIStyle() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
