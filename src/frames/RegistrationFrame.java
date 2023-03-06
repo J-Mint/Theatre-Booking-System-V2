@@ -34,6 +34,7 @@ public class RegistrationFrame extends JFrame {
 	private JPasswordField passwordField;
 	private JButton loginButton;
 	private JCheckBox showPassword;
+	private int userID;
 
 	/**
 	 * Launch the application.
@@ -55,11 +56,19 @@ public class RegistrationFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public RegistrationFrame(int userID) {
-		try { 
-		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-		    e.printStackTrace();
+		this.userID= userID;
+		loadUIStyle();
+		loadImageIcon();
+		configureFrame();
+		configureContentPane();
+		configureHeaderPanel();
+		configureBodyPanel();
+
+		// centre application on screen
+		setLocationRelativeTo(null);
 		}
+
+	private void configureBodyPanel() {
 		userLabel = new JLabel("SET USERNAME");
 		passwordLabel = new JLabel("SET PASSWORD");
 		userTextField = new JTextField();
@@ -77,29 +86,8 @@ public class RegistrationFrame extends JFrame {
 			}
 		});
 
-		ImageIcon icon = new ImageIcon("src/icon.png");
-
-		setIconImage(icon.getImage());
-		setTitle("Theatre Booking System V3");
-
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(000, 000, 800, 800);
-		contentPane = new JPanel();
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 800, 75);
-		contentPane.add(panel);
-
-		JLabel welcomeLabel = new JLabel();
-		welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		welcomeLabel.setBounds(0, 0, 777, 75);
-		welcomeLabel.setBackground(SystemColor.menu);
-		welcomeLabel.setFont(new Font("Arial", Font.BOLD, 46));
-		welcomeLabel.setText("Register");
-		panel.setLayout(null);
-		panel.add(welcomeLabel);
+		
+		
 
 		setLocationAndSize();
 		addComponentsToPane(userID);
@@ -128,7 +116,23 @@ public class RegistrationFrame extends JFrame {
 
 				}
 
-	});}
+	});
+	}
+
+	private void configureHeaderPanel() {
+		JPanel headerPanel = new JPanel();
+		headerPanel.setBounds(0, 0, 800, 75);
+		contentPane.add(headerPanel);
+
+		JLabel welcomeLabel = new JLabel();
+		welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		welcomeLabel.setBounds(0, 0, 777, 75);
+		welcomeLabel.setBackground(SystemColor.menu);
+		welcomeLabel.setFont(new Font("Arial", Font.BOLD, 46));
+		welcomeLabel.setText("Register");
+		headerPanel.setLayout(null);
+		headerPanel.add(welcomeLabel);
+	}
 
 	public void setLocationAndSize() {
 		userLabel.setBounds(10, 86, 764, 30);
@@ -160,5 +164,30 @@ public class RegistrationFrame extends JFrame {
 
 		backButton.setBounds(10, 710, 226, 40);
 		contentPane.add(backButton);
+	}
+	
+	private void configureContentPane() {
+		contentPane = new JPanel();
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+	}
+
+	private void configureFrame() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(000, 000, 800, 800);
+	}
+
+	private void loadImageIcon() {
+		ImageIcon icon = new ImageIcon("src/icon.png");
+		setIconImage(icon.getImage());
+		setTitle("Theatre Booking System V3");
+	}
+
+	private void loadUIStyle() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

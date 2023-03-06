@@ -53,42 +53,26 @@ public class RemoveShowFrame extends JFrame {
 	 */
 	public RemoveShowFrame() {
 		int userID = 1;
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		ImageIcon icon = new ImageIcon("src/icon.png");
-		setIconImage(icon.getImage());
-		setTitle("Theatre Booking System V3");
+		loadUIStyle();
+		loadImageIcon();
+		configureFrame();
+		configureContentPane();
+		configureHeaderPanel();
+		configureBodyPanel();
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(000, 000, 800, 800);
-		contentPane = new JPanel();
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		// centre application on screen
+		setLocationRelativeTo(null);
+	}
 
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 800, 75);
-		contentPane.add(panel);
-
-		JLabel headerLabel = new JLabel();
-		headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		headerLabel.setBounds(0, 0, 777, 75);
-		headerLabel.setBackground(SystemColor.menu);
-		headerLabel.setFont(new Font("Arial", Font.BOLD, 46));
-		headerLabel.setText("Remove Show");
-		panel.setLayout(null);
-		panel.add(headerLabel);
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 77, 784, 684);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
+	private void configureBodyPanel() {
+		JPanel bodyPanel = new JPanel();
+		bodyPanel.setBounds(0, 77, 784, 684);
+		contentPane.add(bodyPanel);
+		bodyPanel.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(12, 42, 760, 508);
-		panel_1.add(scrollPane);
+		bodyPanel.add(scrollPane);
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
@@ -118,13 +102,13 @@ public class RemoveShowFrame extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 		lblNewLabel.setBounds(12, 0, 58, 29);
-		panel_1.add(lblNewLabel);
+		bodyPanel.add(lblNewLabel);
 
 		txtKeywords = new JTextField();
 		txtKeywords.setToolTipText("Type in a keyword (such as the title) to filter the results.");
 		txtKeywords.setFont(new Font("Arial", Font.PLAIN, 14));
 		txtKeywords.setBounds(76, 0, 591, 33);
-		panel_1.add(txtKeywords);
+		bodyPanel.add(txtKeywords);
 		txtKeywords.setColumns(10);
 
 		JButton btnNewButton_1 = new JButton("Search");
@@ -140,10 +124,6 @@ public class RemoveShowFrame extends JFrame {
 						+ "%' OR description LIKE '%" + searchText + "%' OR show_id LIKE '%"
 						+ searchText + "%' OR language LIKE '%" + searchText
 						+ "%' OR duration LIKE '%" + searchText + "%'";
-				// "SELECT performance_ID, show_name, type, description, date, stage_time,
-				// duration, circle_price, stall_price FROM performances JOIN shows on
-				// performances.show_id = shows.show_id WHERE show_name LIKE
-				// '%"+txtKeywords.getText()+"%'";
 				ResultSet rs1 = DBC.runQuery(query1);
 				model.setColumnIdentifiers(cols);
 				try {
@@ -164,7 +144,7 @@ public class RemoveShowFrame extends JFrame {
 						"Error: No row selected", JOptionPane.ERROR_MESSAGE);
 			}
 		});
-		panel_1.add(btnNewButton_1);
+		bodyPanel.add(btnNewButton_1);
 
 		JButton btnNewButton = new JButton("Remove show");
 		btnNewButton.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -196,12 +176,12 @@ public class RemoveShowFrame extends JFrame {
 				
 			} catch (ArrayIndexOutOfBoundsException e1) {
 				JOptionPane.showMessageDialog(null,
-						"No row selected. Please select a row in the table to find tickets for that show.",
+						"No row selected. Please select a row in the table to remove a show.",
 						"Error: No row selected", JOptionPane.ERROR_MESSAGE);
 			}
 			DBC.close();
 		});
-		panel_1.add(btnNewButton);
+		bodyPanel.add(btnNewButton);
 		
 		JButton btnBackToAdmin = new JButton("Back to Admin Menu");
 		btnBackToAdmin.addMouseListener(new MouseAdapter() {
@@ -214,7 +194,46 @@ public class RemoveShowFrame extends JFrame {
 		});
 		btnBackToAdmin.setFont(new Font("Arial", Font.PLAIN, 16));
 		btnBackToAdmin.setBounds(12, 623, 760, 50);
-		panel_1.add(btnBackToAdmin);
+		bodyPanel.add(btnBackToAdmin);
+	}
 
+	private void configureHeaderPanel() {
+		JPanel headerPanel = new JPanel();
+		headerPanel.setBounds(0, 0, 800, 75);
+		contentPane.add(headerPanel);
+
+		JLabel headerLabel = new JLabel();
+		headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		headerLabel.setBounds(0, 0, 777, 75);
+		headerLabel.setBackground(SystemColor.menu);
+		headerLabel.setFont(new Font("Arial", Font.BOLD, 46));
+		headerLabel.setText("Remove Show");
+		headerPanel.setLayout(null);
+		headerPanel.add(headerLabel);
+		
+	}
+	private void configureContentPane() {
+		contentPane = new JPanel();
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+	}
+
+	private void configureFrame() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(000, 000, 800, 800);
+	}
+
+	private void loadImageIcon() {
+		ImageIcon icon = new ImageIcon("src/icon.png");
+		setIconImage(icon.getImage());
+		setTitle("Theatre Booking System V3");
+	}
+
+	private void loadUIStyle() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

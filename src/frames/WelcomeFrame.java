@@ -21,7 +21,7 @@ import javax.swing.UIManager;
 
 public class WelcomeFrame extends JFrame {
 
-	private JPanel mainPanel;
+	private JPanel contentPane;
 
 	/**
 	 * Launch the application.
@@ -45,12 +45,13 @@ public class WelcomeFrame extends JFrame {
 	public WelcomeFrame() {
 		loadUIStyle();
 		loadImageIcon();
-		loadFrameAndMainPanel();
-		loadHeaderPanel();
-		loadBodyPanel();		
+		configureFrame();
+		configureContentPane();
+		configureHeaderPanel();
+		configureBodyPanel();		
 	}
 
-	private void loadBodyPanel() {
+	private void configureBodyPanel() {
 		JPanel bodyPanel = new JPanel();
 		bodyPanel.setBounds(0, 77, 784, 684);
 		JLabel clickToBeginLabel = new JLabel();
@@ -68,14 +69,14 @@ public class WelcomeFrame extends JFrame {
 		clickToBeginLabel.setText("Click to begin");
 		clickToBeginLabel.setBounds(0, 0, 784, 684);
 		bodyPanel.add(clickToBeginLabel);
-		mainPanel.add(bodyPanel);
+		contentPane.add(bodyPanel);
 		bodyPanel.setLayout(null);
 	}
 
-	private void loadHeaderPanel() {
+	private void configureHeaderPanel() {
 		JPanel headerPanel = new JPanel();
 		headerPanel.setBounds(0, 0, 800, 75);
-		mainPanel.add(headerPanel);
+		contentPane.add(headerPanel);
 		
 		JLabel welcomeLabel = new JLabel();
 		welcomeLabel.addMouseListener(new MouseAdapter() {
@@ -95,26 +96,29 @@ public class WelcomeFrame extends JFrame {
 		headerPanel.add(welcomeLabel);
 	}
 
-	public void loadUIStyle() {
-		try { 
-		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
+	private void configureContentPane() {
+		contentPane = new JPanel();
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 	}
-	
-	public void loadImageIcon() {
+
+	private void configureFrame() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(000, 000, 800, 800);
+	}
+
+	private void loadImageIcon() {
 		ImageIcon icon = new ImageIcon("src/icon.png");
 		setIconImage(icon.getImage());
 		setTitle("Theatre Booking System V3");
 	}
-	
-	public void loadFrameAndMainPanel() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(000, 000, 800, 800);
-		mainPanel = new JPanel();
-		setContentPane(mainPanel);
-		mainPanel.setLayout(null);
+
+	private void loadUIStyle() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	

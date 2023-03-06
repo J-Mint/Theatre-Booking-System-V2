@@ -1,4 +1,5 @@
 package frames;
+
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -16,63 +17,36 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import DBConnector.*;
+
 public class ShowDetailedInfoFrame extends JFrame {
 
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					ShowDetailedFrame frame = new ShowDetailedFrame();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	private int performanceID, userID;
 
 	/**
 	 * Create the frame.
 	 */
 	public ShowDetailedInfoFrame(int performanceID, int userID) {
-		try { 
-		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
-		ImageIcon icon = new ImageIcon("src/icon.png");
-		setIconImage(icon.getImage());
-		setTitle("Theatre Booking System V3");
+		this.performanceID = performanceID;
+		this.userID = userID;
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(000, 000, 800, 800);
-		contentPane = new JPanel();
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		loadUIStyle();
+		loadImageIcon();
+		configureFrame();
+		configureContentPane();
+		configureHeaderPanel();
+		configureBodyPanel();
 
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 800, 75);
-		contentPane.add(panel);
+		// centre application on screen
+		setLocationRelativeTo(null);
 
-		JLabel headerLabel = new JLabel();
-		headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		headerLabel.setBounds(0, 0, 777, 75);
-		headerLabel.setBackground(SystemColor.menu);
-		headerLabel.setFont(new Font("Arial", Font.BOLD, 46));
-		headerLabel.setText("You are booking tickets to see:");
+	}
 
-		panel.setLayout(null);
-		panel.add(headerLabel);
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 77, 784, 684);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
+	private void configureBodyPanel() {
+		JPanel bodyPanel = new JPanel();
+		bodyPanel.setBounds(0, 77, 784, 684);
+		contentPane.add(bodyPanel);
+		bodyPanel.setLayout(null);
 
 		DBConnector DBC = new DBConnector();
 		DBC.connect();
@@ -106,92 +80,92 @@ public class ShowDetailedInfoFrame extends JFrame {
 		JLabel lblTitle = new JLabel("Title:");
 		lblTitle.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblTitle.setBounds(42, 58, 123, 28);
-		panel_1.add(lblTitle);
+		bodyPanel.add(lblTitle);
 
 		JLabel lblTitle1 = new JLabel(row[1]);
 		lblTitle1.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblTitle1.setBounds(240, 58, 123, 28);
-		panel_1.add(lblTitle1);
+		bodyPanel.add(lblTitle1);
 
 		JLabel lblType = new JLabel("Type:");
 		lblType.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblType.setBounds(42, 97, 123, 28);
-		panel_1.add(lblType);
+		bodyPanel.add(lblType);
 
 		JLabel lblType1 = new JLabel(row[2]);
 		lblType1.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblType1.setBounds(240, 97, 123, 28);
-		panel_1.add(lblType1);
+		bodyPanel.add(lblType1);
 
 		JLabel lblDescription = new JLabel("Description:");
 		lblDescription.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblDescription.setBounds(42, 136, 136, 28);
-		panel_1.add(lblDescription);
+		bodyPanel.add(lblDescription);
 
 		JLabel lblDescription1 = new JLabel(row[3]);
 		lblDescription1.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblDescription1.setBounds(240, 136, 123, 28);
-		panel_1.add(lblDescription1);
+		bodyPanel.add(lblDescription1);
 
 		JLabel lblDate = new JLabel("Date:");
 		lblDate.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblDate.setBounds(42, 175, 136, 28);
-		panel_1.add(lblDate);
+		bodyPanel.add(lblDate);
 
 		JLabel lblDate1 = new JLabel(row[4]);
 		lblDate1.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblDate1.setBounds(240, 175, 123, 28);
-		panel_1.add(lblDate1);
+		bodyPanel.add(lblDate1);
 
 		JLabel lblStageTime = new JLabel("Stage Time:");
 		lblStageTime.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblStageTime.setBounds(42, 214, 136, 28);
-		panel_1.add(lblStageTime);
+		bodyPanel.add(lblStageTime);
 
 		JLabel lblStageTime1 = new JLabel(row[5]);
 		lblStageTime1.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblStageTime1.setBounds(240, 214, 123, 28);
-		panel_1.add(lblStageTime1);
+		bodyPanel.add(lblStageTime1);
 
 		JLabel lblDuration = new JLabel("Duration:");
 		lblDuration.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblDuration.setBounds(42, 253, 136, 28);
-		panel_1.add(lblDuration);
+		bodyPanel.add(lblDuration);
 
 		JLabel lblDuration1 = new JLabel(row[6]);
 		lblDuration1.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblDuration1.setBounds(240, 253, 123, 28);
-		panel_1.add(lblDuration1);
+		bodyPanel.add(lblDuration1);
 
 		JLabel lblSeatAvailability = new JLabel("Seats Available:");
 		lblSeatAvailability.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblSeatAvailability.setBounds(42, 292, 184, 28);
-		panel_1.add(lblSeatAvailability);
+		bodyPanel.add(lblSeatAvailability);
 
 		JLabel lblSeatAvailability1 = new JLabel(seatsAvailable);
 		lblSeatAvailability1.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblSeatAvailability1.setBounds(240, 292, 184, 28);
-		panel_1.add(lblSeatAvailability1);
+		bodyPanel.add(lblSeatAvailability1);
 
 		JLabel lblStallPrice = new JLabel("Stall Price :£");
 		lblStallPrice.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblStallPrice.setBounds(42, 331, 159, 28);
-		panel_1.add(lblStallPrice);
+		bodyPanel.add(lblStallPrice);
 
 		JLabel lblStallPrice1 = new JLabel(row[8]);
 		lblStallPrice1.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblStallPrice1.setBounds(240, 331, 123, 28);
-		panel_1.add(lblStallPrice1);
+		bodyPanel.add(lblStallPrice1);
 
 		JLabel lblCirclePrice = new JLabel("Circle Price :£");
 		lblCirclePrice.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblCirclePrice.setBounds(42, 370, 159, 28);
-		panel_1.add(lblCirclePrice);
+		bodyPanel.add(lblCirclePrice);
 
 		JLabel lblCirclePrice1 = new JLabel(row[7]);
 		lblCirclePrice1.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblCirclePrice1.setBounds(240, 370, 123, 28);
-		panel_1.add(lblCirclePrice1);
+		bodyPanel.add(lblCirclePrice1);
 
 		JButton btnNewButton = new JButton("Go back");
 		btnNewButton.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -203,7 +177,7 @@ public class ShowDetailedInfoFrame extends JFrame {
 			}
 		});
 		btnNewButton.setBounds(42, 577, 114, 80);
-		panel_1.add(btnNewButton);
+		bodyPanel.add(btnNewButton);
 
 		JButton btnContinue = new JButton("Continue");
 		if (Integer.parseInt(seatsAvailable) < 1) {
@@ -219,42 +193,83 @@ public class ShowDetailedInfoFrame extends JFrame {
 					LoginFrame lframe = new LoginFrame(userID);
 					lframe.setVisible(true);
 				} else {
-				BookingFrame boframe = new BookingFrame(lblCirclePrice1.getText(), lblStallPrice1.getText(), userID, performanceID);
-				boframe.setVisible(true);
+					BookingFrame boframe = new BookingFrame(lblCirclePrice1.getText(), lblStallPrice1.getText(), userID,
+							performanceID);
+					boframe.setVisible(true);
 				}
 			}
 		});
-		panel_1.add(btnContinue);
-		
+		bodyPanel.add(btnContinue);
+
 		JLabel lblLanguage = new JLabel("Language:");
 		lblLanguage.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblLanguage.setBounds(42, 409, 159, 28);
-		panel_1.add(lblLanguage);
-		
+		bodyPanel.add(lblLanguage);
+
 		JLabel lblLiveMusic = new JLabel("Live Music:");
 		lblLiveMusic.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblLiveMusic.setBounds(42, 448, 159, 28);
-		panel_1.add(lblLiveMusic);
-		
+		bodyPanel.add(lblLiveMusic);
+
 		JLabel lblPerformers = new JLabel("Performers: ");
 		lblPerformers.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblPerformers.setBounds(42, 487, 159, 28);
-		panel_1.add(lblPerformers);
-		
-		
+		bodyPanel.add(lblPerformers);
+
 		JLabel lblLanguage_1 = new JLabel(row[9]);
 		lblLanguage_1.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblLanguage_1.setBounds(240, 409, 123, 28);
-		panel_1.add(lblLanguage_1);
-		
+		bodyPanel.add(lblLanguage_1);
+
 		JLabel lblLiveMusic_1 = new JLabel(row[10]);
 		lblLiveMusic_1.setFont(new Font("Arial", Font.PLAIN, 24));
 		lblLiveMusic_1.setBounds(240, 448, 123, 28);
-		panel_1.add(lblLiveMusic_1);
-		
+		bodyPanel.add(lblLiveMusic_1);
+
 		JLabel performers = new JLabel(row[11]);
 		performers.setFont(new Font("Arial", Font.PLAIN, 24));
 		performers.setBounds(240, 487, 123, 28);
-		panel_1.add(performers);
+		bodyPanel.add(performers);
+	}
+
+	private void configureHeaderPanel() {
+		JPanel headerPanel = new JPanel();
+		headerPanel.setBounds(0, 0, 800, 75);
+		contentPane.add(headerPanel);
+
+		JLabel headerLabel = new JLabel();
+		headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		headerLabel.setBounds(0, 0, 777, 75);
+		headerLabel.setBackground(SystemColor.menu);
+		headerLabel.setFont(new Font("Arial", Font.BOLD, 46));
+		headerLabel.setText("You are booking tickets to see:");
+
+		headerPanel.setLayout(null);
+		headerPanel.add(headerLabel);
+	}
+
+	private void configureContentPane() {
+		contentPane = new JPanel();
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+	}
+
+	private void configureFrame() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(000, 000, 800, 800);
+	}
+
+	private void loadImageIcon() {
+		ImageIcon icon = new ImageIcon("src/icon.png");
+		setIconImage(icon.getImage());
+		setTitle("Theatre Booking System V3");
+	}
+
+	private void loadUIStyle() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
