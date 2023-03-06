@@ -167,9 +167,10 @@ public class StagePerformanceFrame extends JFrame {
 				DBC.close();
 			} catch (ArrayIndexOutOfBoundsException e2) {
 				JOptionPane.showMessageDialog(null,
-						"No row selected. Please select a row in the table to find tickets for that show.",
+						"No row selected. Please select a row in the table to stage a performance.",
 						"Error: No row selected", JOptionPane.ERROR_MESSAGE);
 			}
+			
 		});
 		panel_1.add(btnNewButton_1);
 
@@ -311,8 +312,11 @@ public class StagePerformanceFrame extends JFrame {
 					DBC.runQuery(query);
 				}
 				DBC.close();
-				//success
-				//
+				JFrame frame = new JFrame("");
+				JOptionPane.showMessageDialog(frame, "Show Added to Staging List Successfully.");
+				dispose();
+				AdminMenuFrame aframe = new AdminMenuFrame(1);
+				aframe.setVisible(true);
 				
 			}
 		});

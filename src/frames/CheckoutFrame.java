@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import javax.swing.ButtonGroup;
@@ -173,25 +174,38 @@ public class CheckoutFrame extends JFrame {
 						+ collectionRequired + ")";
 				String orderID = "";
 				try {
-				DBC.runQuery(query);
-				query = "SELECT order_id FROM orders WHERE customer_id="+userID+" AND order_date='"+date+"'";
-				ResultSet rs = DBC.runQuery(query);
-				while (rs.next()) {
-					orderID = rs.getString(1);
-				}
+					DBC.runQuery(query);
+					query = "SELECT order_id FROM orders WHERE customer_id=" + userID + " AND order_date='" + date
+							+ "'";
+					ResultSet rs = DBC.runQuery(query);
+					while (rs.next()) {
+						orderID = rs.getString(1);
+					}
 				} catch (Exception e1) {
-					
+
 				}
-				WelcomeFrame frame = new WelcomeFrame();
-				frame.setVisible(true);
-				// generte po file
-				
-				while (orderID.length() < 7) {
-					orderID=String.format("%7s", orderID).replace(" " , "0");
-				}
-				
+				// view basket where userID matches
+				query = "SELECT performance_id, seat_id, standard_or_concession, price FROM basket WHERE user_id ="
+						+ userID;
+				// save as result set
+				ResultSet rs = DBC.runQuery(query);
 				try {
-					FileWriter myWriter = new FileWriter("C:\\Users\\Joe\\Downloads\\PO" + orderID + ".txt");
+					while (rs.next()) {
+						String query1 = "CALL orderLineInsertion(" + orderID + ", " + rs.getString(1) + ","
+								+ rs.getString(2) + ",'" + rs.getString(3) + "'," + rs.getString(4) + ")";
+						DBC.runQuery(query1);
+					}
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+
+				// generate po file
+
+				String formatOrderID = String.format("%7s", orderID).replace(" ", "0");
+
+				try {
+					FileWriter myWriter = new FileWriter("C:\\Users\\Joe\\Downloads\\PO" + formatOrderID + ".txt");
 					myWriter.write("---------------------------------------------------\n");
 					myWriter.write("THANK YOU FOR YOUR PURCHASE.\n");
 					myWriter.write("---------------------------------------------------\n");
@@ -199,34 +213,47 @@ public class CheckoutFrame extends JFrame {
 							+ surnameTextfield.getText().toUpperCase() + "\n");
 					myWriter.write("---------------------------------------------------\n");
 					myWriter.write("ADDRESS: " + addressTextfield.getText().toUpperCase() + "\n");
-					myWriter.write("CARD NO: **** **** **** "+(cardNoTextfield.getText().substring(cardNoTextfield.getText().length() - 4))+"\n");
-					myWriter.write("ORDER TOTAL: £"+price+"\n");
+					myWriter.write("CARD NO: **** **** **** "
+							+ (cardNoTextfield.getText().substring(cardNoTextfield.getText().length() - 4)) + "\n");
+					myWriter.write("ORDER TOTAL: £" + price + "\n");
 					myWriter.write("---------------------------------------------------\n");
-					myWriter.write("ORDER_ID: "+orderID +"\n");
-					myWriter.write("CUSTOMER_ID: "+userID+"\n");
+					myWriter.write("ORDER_ID: " + orderID + "\n");
+					myWriter.write("CUSTOMER_ID: " + userID + "\n");
 					myWriter.write("---------------------------------------------------\n");
-					
-					
-					
-					// for loop number of tickets in basket
-					for (int i = 1; i <= Integer.parseInt(ticketCount); i++) {
-						myWriter.write("TICKET " + i + "\n");
-						myWriter.write("PERFORMANCE_ID: \n");
-						myWriter.write("SEAT_ID: \n");
-						myWriter.write("SEAT_TYPE: \n");
-						myWriter.write("STANDARD_TICKET: \n");
-						myWriter.write("PRICE: \n");
-						myWriter.write("SHOW_TITLE: \n");
-						myWriter.write("DATE: \n");
-						myWriter.write("TIME: \n");
-						myWriter.write("---------------------------------------------------\n");
-					}
 
+					query = "CALL getOrderLines(" + orderID + ")";
+					ResultSet rs2 = DBC.runQuery(query);
+					try {
+						while (rs2.next()) {
+							// myWriter.write("TICKET " + i + "\n");
+							myWriter.write("PERFORMANCE_ID: " + rs2.getString(1) + "\n");
+							myWriter.write("SEAT_ID: " + rs2.getString(2) + "\n");
+							myWriter.write("SEAT_TYPE: " + rs2.getString(3).toUpperCase() + "\n");
+							myWriter.write("TICKET_TYPE: " + rs2.getString(4).toUpperCase() + "\n");
+							myWriter.write("PRICE: " + rs2.getString(5) + "\n");
+							myWriter.write("SHOW_TITLE: " + rs2.getString(6).toUpperCase() + "\n");
+							myWriter.write("DATE: " + rs2.getString(7) + "\n");
+							myWriter.write("STAGE_TIME: " + rs2.getString(8).toUpperCase() + "\n");
+							myWriter.write("---------------------------------------------------\n");
+
+						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					myWriter.close();
+
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+				// clear the basket where user id = match;
+
+				// log out the user
+				WelcomeFrame frame = new WelcomeFrame();
+				frame.setVisible(true);
+				DBC.close();
 			}
+
 		});
 		completePurchaseButton.setBounds(208, 512, 566, 91);
 		panel_1.add(completePurchaseButton);

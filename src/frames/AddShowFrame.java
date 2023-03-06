@@ -8,6 +8,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -129,15 +130,18 @@ public class AddShowFrame extends JFrame {
 						+ "')";
 				try {
 					DBC.runQuery(query);
+					
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 				DBC.close();
 
 				// get confirmation that it worked???
-//				dispose();
-//				AdminMenuFrame aframe = new AdminMenuFrame("1");
-//				aframe.setVisible(true);
+				JFrame frame = new JFrame("");
+				JOptionPane.showMessageDialog(frame, "Show Added Successfully.");
+				dispose();
+				AdminMenuFrame aframe = new AdminMenuFrame(1);
+				aframe.setVisible(true);
 			}
 
 		});

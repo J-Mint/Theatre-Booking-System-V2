@@ -92,8 +92,8 @@ public class RemovePerformanceFrame extends JFrame {
 
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		String cols[] = new String[] { "Performance ID", "Show ID", "Title", "Date", "Stage Time", "Duration", "Stall Price", 
-				"Circle Price" };
+		String cols[] = new String[] { "Performance ID", "Show ID", "Title", "Date", "Stage Time", "Duration",
+				"Stall Price", "Circle Price" };
 		model = (DefaultTableModel) table.getModel();
 		DBConnector DBC = new DBConnector();
 		DBC.connect();
@@ -135,11 +135,9 @@ public class RemovePerformanceFrame extends JFrame {
 				model.setRowCount(0);
 				DBC.connect();
 				String searchText = txtKeywords.getText();
-				String query1 = "SELECT * FROM shows WHERE show_name LIKE '%"
-						+ searchText + "%' OR type LIKE '%" + searchText
-						+ "%' OR description LIKE '%" + searchText + "%' OR show_id LIKE '%"
-						+ searchText + "%' OR language LIKE '%" + searchText
-						+ "%' OR duration LIKE '%" + searchText + "%'";
+				String query1 = "SELECT * FROM shows WHERE show_name LIKE '%" + searchText + "%' OR type LIKE '%"
+						+ searchText + "%' OR description LIKE '%" + searchText + "%' OR show_id LIKE '%" + searchText
+						+ "%' OR language LIKE '%" + searchText + "%' OR duration LIKE '%" + searchText + "%'";
 				// "SELECT performance_ID, show_name, type, description, date, stage_time,
 				// duration, circle_price, stall_price FROM performances JOIN shows on
 				// performances.show_id = shows.show_id WHERE show_name LIKE
@@ -173,36 +171,44 @@ public class RemovePerformanceFrame extends JFrame {
 			try {
 				int index = table.getSelectedRow();
 				int performanceID = Integer.parseInt((String) model.getValueAt(index, 0));
-				int confirm = JOptionPane.showConfirmDialog(null, "You are about to remove performance with ID: "+performanceID+". Is this correct?");
+				int confirm = JOptionPane.showConfirmDialog(null,
+						"You are about to remove performance with ID: " + performanceID + ". Is this correct?");
 				if (confirm == 0) {
-				DBC.connect();
-				String query2 = "DELETE FROM performances WHERE performance_id=" + performanceID;
-				DBC.runQuery(query2);
-				model.setRowCount(0);
-				model.setColumnIdentifiers(cols);
-				ResultSet rs2 = DBC.runQuery(query);
-				try {
-					while (rs2.next()) {
-						String row[] = new String[8];
-						for (int i = 0; i < 8; i++) {
-							row[i] = rs2.getString(i + 1);
+					DBC.connect();
+					String query2 = "SET FOREIGN_KEY_CHECKS=0";
+					DBC.runQuery(query2);
+					query2 = "DELETE FROM basket where performance_id = "+performanceID;
+					query2 = "DELETE FROM seats WHERE performance_id =" + performanceID;
+					DBC.runQuery(query2);
+					query2 = "DELETE FROM performances WHERE performance_id=" + performanceID;
+					DBC.runQuery(query2);
+					query2 = "SET FOREIGN_KEY_CHECKS=1";
+					DBC.runQuery(query2);
+					model.setRowCount(0);
+					model.setColumnIdentifiers(cols);
+					ResultSet rs2 = DBC.runQuery(query);
+					try {
+						while (rs2.next()) {
+							String row[] = new String[8];
+							for (int i = 0; i < 8; i++) {
+								row[i] = rs2.getString(i + 1);
+							}
+							model.addRow(row);
 						}
-						model.addRow(row);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
 					}
-				} catch (SQLException e1) {
-					e1.printStackTrace();
 				}
-				}
-				
+
 			} catch (ArrayIndexOutOfBoundsException e1) {
 				JOptionPane.showMessageDialog(null,
-						"No row selected. Please select a row in the table to find tickets for that show.",
+						"No row selected. Please select a row in the table to remove a performance.",
 						"Error: No row selected", JOptionPane.ERROR_MESSAGE);
 			}
 			DBC.close();
 		});
 		panel_1.add(btnNewButton);
-		
+
 		JButton btnBackToAdmin = new JButton("Back to Admin Menu");
 		btnBackToAdmin.addMouseListener(new MouseAdapter() {
 			@Override

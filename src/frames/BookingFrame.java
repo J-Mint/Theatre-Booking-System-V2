@@ -21,6 +21,8 @@ import java.awt.Label;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import DBConnector.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 public class BookingFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -264,6 +266,16 @@ public class BookingFrame extends JFrame {
 		panel_1.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Cancel");
+		btnNewButton_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				//go to basket page
+				BrowseFrame dframe = new BrowseFrame(userID);
+				dframe.setVisible(true);
+				//add basket page to browse frame
+			}
+		});
 		btnNewButton_2.setFont(new Font("Arial", Font.PLAIN, 16));
 		btnNewButton_2.setBounds(10, 614, 248, 59);
 		panel_1.add(btnNewButton_2);

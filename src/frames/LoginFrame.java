@@ -136,7 +136,7 @@ public class LoginFrame extends JFrame {
 					}
 					DBC.close();
 
-					JFrame frame = new JFrame("JOptionPane showMessageDialog example");
+					JFrame frame = new JFrame("");
 					// if matches details in the database
 					if (count == 1) {
 						if (userID == 1) {
