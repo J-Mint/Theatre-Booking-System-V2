@@ -22,7 +22,6 @@ https://user-images.githubusercontent.com/112823669/218261108-b97a4934-b796-4759
 * Testing
 * Error/ exception handling
 * rename variables, add comments, make certain variables private in scope and break up methods.
-* Format (DOUBLE) price so that it is to 2 decimal 
 * upload ERD and UML diagram
 * Upload SQL script
 * UI tweaks: improve consistency (same: font type, font size, case, button placement and size; tables: remove grids, make only 1 row selectable).
@@ -60,7 +59,7 @@ https://user-images.githubusercontent.com/112823669/218261108-b97a4934-b796-4759
 
 ![image](https://user-images.githubusercontent.com/112823669/218528623-86f57b9c-c6c5-4fd0-bb23-9f53b25016ab.png)
 
-6) The user is then shown all the seats for the show they clicked on earlier. Seats that are already booked, or that are in someone else's basket,  cannot be selected.
+6) After logging in, the user is then shown all the seats for the show they clicked on earlier. Seats that are already booked, or that are in someone else's basket, cannot be selected. (If the user that logged in was an admin, see step 11)
 
 ![image](https://user-images.githubusercontent.com/112823669/218529018-84a9caec-614a-4420-95cd-9d353bbb14eb.png)
 
@@ -76,5 +75,31 @@ https://user-images.githubusercontent.com/112823669/218261108-b97a4934-b796-4759
 
 ![image](https://user-images.githubusercontent.com/112823669/218530224-3a7a51e3-0814-4b84-9236-e17a530688b0.png)
 
+10) A Purchase Order file is generated on completion of ticket purchase and the user is logged out and taken back to the Welcome Screen.
+
+![image](https://user-images.githubusercontent.com/112823669/223398489-6fc80eac-bfd3-4ba0-a25d-c98577d78a21.png)
+
+11) ADMIN LOG IN. Admin is taken to the admin menu screen
+
+![image](https://user-images.githubusercontent.com/112823669/223399087-da15a57e-40ef-4a35-90f6-f8097d0db1d3.png)
+
+12) Stage Performance Screen. Staging a show will automatically generate 200 seats that can be booked for the performance.
+
+![image](https://user-images.githubusercontent.com/112823669/223399192-c50a35b1-629f-4141-91cb-86936f7d5ff8.png)
 
 
+![image](https://user-images.githubusercontent.com/112823669/223400314-2626a3fa-d6f0-45db-958b-c904ee7a9226.png)
+
+13) Add Show Screen
+
+![image](https://user-images.githubusercontent.com/112823669/223399280-03c9a19c-58d4-4df8-ae9e-d9a46a8c7ba5.png)
+
+14) Remove Show Screen
+
+![image](https://user-images.githubusercontent.com/112823669/223399375-8fcbf6ac-7d93-4b62-8e2b-2f7f4d5e545c.png)
+
+15) Remove Performance Screen
+
+![image](https://user-images.githubusercontent.com/112823669/223399477-1b8f22ab-8921-46b3-a02b-bdd031e8168b.png)
+
+16) Logout button will log the user out and take them to the Welcome Screen. Browse shows will take the user to the Show Browsing Screen. 
