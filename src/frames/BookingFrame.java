@@ -109,12 +109,14 @@ public class BookingFrame extends JFrame {
 										String[] order = { ("" + performanceID), "Standard", seatID, "" + price };
 										tempBasket.add(order);
 										total += price;
+										total = Math.round(total * 100) / 100.00;
 										lblTotal1.setText("" + total);
 									} else {
 										double price = ((Double.parseDouble(stallPrice)) * 3.0 / 4.0);
 										String[] order = { ("" + performanceID), "Concession", seatID, "" + price };
 										tempBasket.add(order);
 										total += price;
+										total = Math.round(total * 100) / 100.00;
 										lblTotal1.setText("" + total);
 									}
 								} else {
@@ -174,12 +176,14 @@ public class BookingFrame extends JFrame {
 										String[] order = { ("" + performanceID), "Standard", seatID, "" + price };
 										tempBasket.add(order);
 										total += price;
+										total = Math.round(total * 100) / 100.00;
 										lblTotal1.setText("" + total);
 									} else {
 										Double price = ((Double.parseDouble(circlePrice)) * 3.0 / 4.0);
 										String[] order = { ("" + performanceID), "Concession", seatID, "" + price };
 										tempBasket.add(order);
 										total += price;
+										total = Math.round(total * 100) / 100.00;
 										lblTotal1.setText("" + total);
 
 									}

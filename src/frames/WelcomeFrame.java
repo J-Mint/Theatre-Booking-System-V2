@@ -48,7 +48,10 @@ public class WelcomeFrame extends JFrame {
 		configureFrame();
 		configureContentPane();
 		configureHeaderPanel();
-		configureBodyPanel();		
+		configureBodyPanel();
+		
+		//centre application on screen
+		setLocationRelativeTo(null);
 	}
 
 	private void configureBodyPanel() {

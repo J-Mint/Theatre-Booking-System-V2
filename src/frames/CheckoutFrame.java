@@ -197,12 +197,13 @@ public class CheckoutFrame extends JFrame {
 					ResultSet rs2 = DBC.runQuery(query);
 					try {
 						while (rs2.next()) {
-							// myWriter.write("TICKET " + i + "\n");
+							Double price = Double.parseDouble(rs2.getString(5));
+							price = Math.round(price * 100) / 100.00;
 							myWriter.write("PERFORMANCE_ID: " + rs2.getString(1) + "\n");
 							myWriter.write("SEAT_ID: " + rs2.getString(2) + "\n");
 							myWriter.write("SEAT_TYPE: " + rs2.getString(3).toUpperCase() + "\n");
 							myWriter.write("TICKET_TYPE: " + rs2.getString(4).toUpperCase() + "\n");
-							myWriter.write("PRICE: " + rs2.getString(5) + "\n");
+							myWriter.write("PRICE: " + price + "\n");
 							myWriter.write("SHOW_TITLE: " + rs2.getString(6).toUpperCase() + "\n");
 							myWriter.write("DATE: " + rs2.getString(7) + "\n");
 							myWriter.write("STAGE_TIME: " + rs2.getString(8).toUpperCase() + "\n");
@@ -261,10 +262,13 @@ public class CheckoutFrame extends JFrame {
 				if (concessionCount1 == 0) {
 					// price +=ticketCount;
 					Double price1 = Double.parseDouble(price) + Double.parseDouble(ticketCount);
+					price1 = Math.round(price1 * 100) / 100.00;
 					dynamicPriceLabel.setText("" + price1);
+					
 				} else if (concessionCount1 == 1) {
 					// price += 1;
 					Double price1 = Double.parseDouble(price) + 1;
+					price1 = Math.round(price1 * 100) / 100.00;
 					dynamicPriceLabel.setText("" + price1);
 				}
 				// else free postage.
