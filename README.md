@@ -17,28 +17,20 @@ An out of date video demo from 09/02/2023 (much progress has been made since the
 
 https://user-images.githubusercontent.com/112823669/218261108-b97a4934-b796-4759-9951-de5fd0377b64.mp4
 
-## To do:
-* SQL Triggers and stored functions
-* Testing
-* Error/ exception handling
-* rename variables, add comments, make certain variables private in scope and break up methods.
-* upload ERD and UML diagram
-* Upload SQL script
-* UI tweaks: improve consistency (same: font type, font size, case, button placement and size; tables: remove grids, make only 1 row selectable).
-
-
-
-
-
 ## Diagrams
-
+![image](https://user-images.githubusercontent.com/112823669/223406884-93bf81a7-1764-40fc-a5ec-1e146ab35e36.png)
+TODO UML
 ## What went well
+TODO 
 
-## Issues
-
-## Improvements
+## Improvements to make
+* No written tests.
+* Error/ Exception handling needs improving.
+* UI could be improved (improved usability/ consistency).
+* Methods could broken up into smaller methods.
 
 ## Flow
+TODO UPDATE SCREEN SHOTS
 1) Welcome screen
 
 ![image](https://user-images.githubusercontent.com/112823669/218526974-a0e77228-5322-4118-8171-85bdf25c8d07.png)
